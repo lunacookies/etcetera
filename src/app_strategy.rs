@@ -16,20 +16,20 @@ pub struct AppStrategyArgs {
 }
 
 impl AppStrategyArgs {
-    /// Constructs a bunde identifier from a `StrategyArgs`.
+    /// Constructs a bunde identifier from am `AppStrategyArgs`.
     ///
     /// ```
-    /// use etcetera::StrategyArgs;
+    /// use etcetera::app_strategy::AppStrategyArgs;
     ///
-    /// let strategy_args = StrategyArgs {
+    /// let strategy_args = AppStrategyArgs {
     ///     top_level_domain: "com".to_string(),
     ///     author: "Apple".to_string(),
     ///     app_name: "Safari".to_string(),
     /// };
     ///
-    /// assert_eq!(strategy_args.bundle_identifier(), "com.apple.Safari".to_string());
+    /// assert_eq!(strategy_args.bundle_id(), "com.apple.Safari".to_string());
     /// ```
-    pub fn bundle_identifier(&self) -> String {
+    pub fn bundle_id(&self) -> String {
         format!(
             "{}.{}.{}",
             self.top_level_domain,
