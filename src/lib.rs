@@ -2,7 +2,8 @@
 
 #![warn(missing_docs, rust_2018_idioms, missing_debug_implementations)]
 
-pub mod strategy;
+pub mod app_strategy;
+pub mod base_strategy;
 
 /// A convenience function that wraps the [`home_dir`](https://docs.rs/dirs/2/dirs/fn.home_dir.html) function from the [dirs](https://docs.rs/dirs) crate.
 pub fn home_dir() -> Result<std::path::PathBuf, HomeDirError> {
