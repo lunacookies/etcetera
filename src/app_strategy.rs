@@ -100,8 +100,10 @@ pub trait AppStrategy: Sized {
 
 mod apple;
 mod unix;
+mod windows;
 mod xdg;
 
 pub use apple::Apple;
 pub use unix::Unix;
+pub use windows::Windows;
 pub use xdg::Xdg;
