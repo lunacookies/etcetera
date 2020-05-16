@@ -99,7 +99,7 @@ pub trait AppStrategy: Sized {
 }
 
 mod apple;
-pub use apple::Apple;
-
 mod unix;
+
+pub use apple::Apple;
 pub use unix::Unix;
