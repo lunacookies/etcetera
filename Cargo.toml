@@ -3,8 +3,12 @@ name = "etcetera"
 version = "0.1.0"
 authors = ["Aramis Razzaghipour <aramisnoah@gmail.com>"]
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "MIT OR Apache-2.0"
+description = "An unopinionated library for obtaining configuration, data and cache directories"
+homepage = "https://github.com/arzg/etcetera"
+repository = "https://github.com/arzg/etcetera"
+readme = "README.md"
+categories = ["config"]
 
 [dependencies]
 cfg-if = "0.1"
