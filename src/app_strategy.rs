@@ -37,6 +37,23 @@ impl AppStrategyArgs {
             self.app_name
         )
     }
+
+    /// Returns a ‘unixy’ version of the application’s name, akin to what would usually be used as a binary name.
+    ///
+    /// ```
+    /// use etcetera::app_strategy::AppStrategyArgs;
+    ///
+    /// let strategy_args = AppStrategyArgs {
+    ///     top_level_domain: "org".to_string(),
+    ///     author: "Mozilla".to_string(),
+    ///     app_name: "Firefox Developer Edition".to_string(),
+    /// };
+    ///
+    /// assert_eq!(strategy_args.unixy_name(), "firefox-developer-edition".to_string());
+    /// ```
+    pub fn unixy_name(&self) -> String {
+        self.app_name.to_lowercase().replace(' ', "-")
+    }
 }
 
 macro_rules! file_method_body {
