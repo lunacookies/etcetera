@@ -49,6 +49,39 @@ use std::path::PathBuf;
 /// assert_eq!(base_strategy.data_dir(), Path::new("/bar/"));
 /// assert_eq!(base_strategy.cache_dir(), Path::new("/baz/"));
 /// ```
+///
+/// The specification states that:
+///
+/// > All paths set in these environment variables must be absolute. If an implementation encounters a relative path in any of these variables it should consider the path invalid and ignore it.
+///
+/// In this example the environment variables have been given relative values. The strategy behaves correctly and uses the defaults:
+///
+/// ```
+/// use etcetera::base_strategy::BaseStrategy;
+/// use etcetera::base_strategy::Xdg;
+/// use std::path::Path;
+///
+/// std::env::set_var("XDG_CONFIG_HOME", "foo/");
+/// std::env::set_var("XDG_DATA_HOME", "bar/");
+/// std::env::set_var("XDG_CACHE_HOME", "baz/");
+///
+/// let base_strategy = Xdg::new().unwrap();
+///
+/// let home_dir = etcetera::home_dir().unwrap();
+///
+/// assert_eq!(
+///     base_strategy.config_dir().strip_prefix(&home_dir),
+///     Ok(Path::new(".config/")
+/// ));
+/// assert_eq!(
+///     base_strategy.data_dir().strip_prefix(&home_dir),
+///     Ok(Path::new(".local/share/")
+/// ));
+/// assert_eq!(
+///     base_strategy.cache_dir().strip_prefix(&home_dir),
+///     Ok(Path::new(".cache/")
+/// ));
+/// ```
 #[derive(Debug)]
 pub struct Xdg {
     home_dir: PathBuf,
@@ -56,7 +89,19 @@ pub struct Xdg {
 
 impl Xdg {
     fn env_var_or_default(&self, env_var: &str, default: impl AsRef<Path>) -> PathBuf {
-        std::env::var(env_var).map_or(self.home_dir.join(default), PathBuf::from)
+        std::env::var(env_var)
+            .ok()
+            .and_then(|path| {
+                let path = PathBuf::from(path);
+
+                // Return None if the path obtained from the environment variable isn’t absolute.
+                if path.is_absolute() {
+                    Some(path)
+                } else {
+                    None
+                }
+            })
+            .unwrap_or_else(|| self.home_dir.join(default))
     }
 }
 
