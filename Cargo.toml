@@ -5,6 +5,7 @@ authors = ["Aramis Razzaghipour <aramisnoah@gmail.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
 description = "An unopinionated library for obtaining configuration, data and cache directories"
+documentation = "https://docs.rs/etcetera"
 homepage = "https://github.com/arzg/etcetera"
 repository = "https://github.com/arzg/etcetera"
 readme = "README.md"
