@@ -20,6 +20,25 @@ pub trait BaseStrategy: Sized {
     fn cache_dir(&self) -> PathBuf;
 }
 
+macro_rules! create_choose_base_strategy {
+    ($name: ident, $ty: ty) => {
+        /// Returns the current OS’s default [`BaseStrategy`](trait.BaseStrategy.html). This uses the [`Windows`](struct.Windows.html) strategy on Windows, the [`Apple`](struct.Apple.html) strategy on iOS, and [`Xdg`](struct.Xdg.html) everywhere else.
+        pub fn $name() -> Result<$ty, <$ty as BaseStrategy>::CreationError> {
+            <$ty>::new()
+        }
+    };
+}
+
+cfg_if::cfg_if! {
+    if #[cfg(target_os = "windows")] {
+        create_choose_base_strategy!(choose_base_strategy, Windows);
+    } else if #[cfg(target_os = "ios")] {
+        create_choose_base_strategy!(choose_base_strategy, Apple);
+    } else {
+        create_choose_base_strategy!(choose_base_strategy, Xdg);
+    }
+}
+
 mod apple;
 mod windows;
 mod xdg;
