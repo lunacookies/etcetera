@@ -47,10 +47,26 @@ use std::path::PathBuf;
 /// use etcetera::app_strategy::Xdg;
 /// use std::path::Path;
 ///
-/// // Remove the environment variables that the strategy reads from.
-/// std::env::set_var("XDG_CONFIG_HOME", "/my_config_location/");
-/// std::env::set_var("XDG_DATA_HOME", "/my_data_location/");
-/// std::env::set_var("XDG_CACHE_HOME", "/my_cache_location/");
+/// // We need to conditionally set these to ensure that they are absolute paths both on Windows and other systems.
+/// let config_path = if cfg!(windows) {
+///     "C:\\my_config_location\\"
+/// } else {
+///     "/my_config_location/"
+/// };
+/// let data_path = if cfg!(windows) {
+///     "C:\\my_data_location\\"
+/// } else {
+///     "/my_data_location/"
+/// };
+/// let cache_path = if cfg!(windows) {
+///     "C:\\my_cache_location\\"
+/// } else {
+///     "/my_cache_location/"
+/// };
+///
+/// std::env::set_var("XDG_CONFIG_HOME", config_path);
+/// std::env::set_var("XDG_DATA_HOME", data_path);
+/// std::env::set_var("XDG_CACHE_HOME", cache_path);
 ///
 /// let app_strategy = Xdg::new(AppStrategyArgs {
 ///     top_level_domain: "hm".to_string(),
@@ -58,9 +74,9 @@ use std::path::PathBuf;
 ///     app_name: "htop".to_string(),
 /// }).unwrap();
 ///
-/// assert_eq!(app_strategy.config_dir(), Path::new("/my_config_location/htop/"));
-/// assert_eq!(app_strategy.data_dir(), Path::new("/my_data_location/htop/"));
-/// assert_eq!(app_strategy.cache_dir(), Path::new("/my_cache_location/htop/"));
+/// assert_eq!(app_strategy.config_dir(), Path::new(&format!("{}/htop/", config_path)));
+/// assert_eq!(app_strategy.data_dir(), Path::new(&format!("{}/htop/", data_path)));
+/// assert_eq!(app_strategy.cache_dir(), Path::new(&format!("{}/htop/", cache_path)));
 /// ```
 ///
 /// The XDG spec requires that when the environment variables’ values are not absolute paths, their values should be ignored. This example exemplifies this behaviour:

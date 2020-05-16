@@ -39,15 +39,32 @@ use std::path::PathBuf;
 /// use etcetera::base_strategy::Xdg;
 /// use std::path::Path;
 ///
-/// std::env::set_var("XDG_CONFIG_HOME", "/foo/");
-/// std::env::set_var("XDG_DATA_HOME", "/bar/");
-/// std::env::set_var("XDG_CACHE_HOME", "/baz/");
+/// // We need to conditionally set these to ensure that they are absolute paths both on Windows and other systems.
+/// let config_path = if cfg!(windows) {
+///     "C:\\foo\\"
+/// } else {
+///     "/foo/"
+/// };
+/// let data_path = if cfg!(windows) {
+///     "C:\\bar\\"
+/// } else {
+///     "/bar/"
+/// };
+/// let cache_path = if cfg!(windows) {
+///     "C:\\baz\\"
+/// } else {
+///     "/baz/"
+/// };
+///
+/// std::env::set_var("XDG_CONFIG_HOME", config_path);
+/// std::env::set_var("XDG_DATA_HOME", data_path);
+/// std::env::set_var("XDG_CACHE_HOME", cache_path);
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
-/// assert_eq!(base_strategy.config_dir(), Path::new("/foo/"));
-/// assert_eq!(base_strategy.data_dir(), Path::new("/bar/"));
-/// assert_eq!(base_strategy.cache_dir(), Path::new("/baz/"));
+/// assert_eq!(base_strategy.config_dir(), Path::new(config_path));
+/// assert_eq!(base_strategy.data_dir(), Path::new(data_path));
+/// assert_eq!(base_strategy.cache_dir(), Path::new(cache_path));
 /// ```
 ///
 /// The specification states that:
