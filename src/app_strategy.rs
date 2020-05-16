@@ -100,3 +100,6 @@ pub trait AppStrategy: Sized {
 
 mod apple;
 pub use apple::Apple;
+
+mod unix;
+pub use unix::Unix;
