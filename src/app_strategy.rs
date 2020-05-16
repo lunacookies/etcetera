@@ -80,3 +80,6 @@ pub trait AppStrategy: Sized {
         file_method_body!(self, file_name, cache_dir)
     }
 }
+
+mod apple;
+pub use apple::Apple;
