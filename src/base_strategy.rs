@@ -21,7 +21,9 @@ pub trait BaseStrategy: Sized {
 }
 
 mod apple;
+mod windows;
 mod xdg;
 
 pub use apple::Apple;
+pub use windows::Windows;
 pub use xdg::Xdg;
