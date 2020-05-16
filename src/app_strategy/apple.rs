@@ -1,4 +1,5 @@
-use std::path::Path;
+use crate::base_strategy;
+use crate::base_strategy::BaseStrategy;
 use std::path::PathBuf;
 
 /// This is the strategy created by Apple for use on macOS and iOS devices. It is always used by GUI apps on macOS, and is sometimes used by command-line applications there too. iOS only has GUIs, so all iOS applications follow this strategy. The specification is available [here](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW1).
@@ -32,42 +33,29 @@ use std::path::PathBuf;
 /// ```
 #[derive(Debug)]
 pub struct Apple {
+    base_strategy: base_strategy::Apple,
     bundle_id: String,
-    library_dir: PathBuf,
-}
-
-impl Apple {
-    fn dir_in_library(&self, dir: impl AsRef<Path>) -> PathBuf {
-        let mut path = self.library_dir.clone();
-        path.push(dir);
-        path.push(&self.bundle_id);
-
-        path
-    }
 }
 
 impl super::AppStrategy for Apple {
     type CreationError = crate::HomeDirError;
 
     fn new(args: super::AppStrategyArgs) -> Result<Self, Self::CreationError> {
-        let mut library_dir = crate::home_dir()?;
-        library_dir.push("Library/");
-
         Ok(Self {
+            base_strategy: base_strategy::Apple::new()?,
             bundle_id: args.bundle_id(),
-            library_dir,
         })
     }
 
     fn config_dir(&self) -> PathBuf {
-        self.dir_in_library("Preferences/")
+        self.base_strategy.config_dir().join(&self.bundle_id)
     }
 
     fn data_dir(&self) -> PathBuf {
-        self.dir_in_library("Application Support/")
+        self.base_strategy.data_dir().join(&self.bundle_id)
     }
 
     fn cache_dir(&self) -> PathBuf {
-        self.dir_in_library("Caches/")
+        self.base_strategy.cache_dir().join(&self.bundle_id)
     }
 }
