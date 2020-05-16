@@ -7,7 +7,7 @@ use std::path::PathBuf;
 /// The arguments to the creator method of an [`AppStrategy`](trait.AppStrategy.html).
 #[derive(Debug)]
 pub struct AppStrategyArgs {
-    /// The top level domain of the application, e.g `com` or `org`.
+    /// The top level domain of the application, e.g. `com` or `org`.
     pub top_level_domain: String,
     /// The name of the author of the application.
     pub author: String,
@@ -16,7 +16,7 @@ pub struct AppStrategyArgs {
 }
 
 impl AppStrategyArgs {
-    /// Constructs a bunde identifier from am `AppStrategyArgs`.
+    /// Constructs a bunde identifier from an `AppStrategyArgs`.
     ///
     /// ```
     /// use etcetera::app_strategy::AppStrategyArgs;
@@ -53,7 +53,7 @@ pub trait AppStrategy: Sized {
     /// The error type returned by `new`.
     type CreationError;
 
-    /// The constructor for a strategy requires access to some basic information about your application, but can also fail.
+    /// The constructor requires access to some basic information about your application.
     fn new(args: AppStrategyArgs) -> Result<Self, Self::CreationError>;
 
     /// Gets the configuration directory for your application.
