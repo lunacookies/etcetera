@@ -19,3 +19,6 @@ pub trait BaseStrategy: Sized {
     /// Gets the user’s cache directory.
     fn cache_dir(&self) -> PathBuf;
 }
+
+mod apple;
+pub use apple::Apple;
