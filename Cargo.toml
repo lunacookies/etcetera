@@ -13,5 +13,5 @@ categories = ["config"]
 
 [dependencies]
 cfg-if = "0.1"
-dirs = "2"
+dirs = "3"
 thiserror = "1"
