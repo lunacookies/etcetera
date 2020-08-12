@@ -100,7 +100,7 @@ pub trait AppStrategy: Sized {
 
 macro_rules! create_choose_app_strategy {
     ($name: ident, $ty: ty) => {
-        /// Returns the current OS’s default [`AppStrategy`](trait.AppStrategy.html). This uses the [`Windows`](struct.Windows.html) strategy on Windows, the [`Apple`](struct.Apple.html) strategy on iOS, and [`Xdg`](struct.Xdg.html) everywhere else.
+        /// Returns the current OS’s default [`AppStrategy`](trait.AppStrategy.html). This uses the [`Windows`](struct.Windows.html) strategy on Windows, and [`Xdg`](struct.Xdg.html) everywhere else.
         pub fn $name(args: AppStrategyArgs) -> Result<$ty, <$ty as AppStrategy>::CreationError> {
             <$ty>::new(args)
         }
@@ -110,8 +110,6 @@ macro_rules! create_choose_app_strategy {
 cfg_if::cfg_if! {
     if #[cfg(target_os = "windows")] {
         create_choose_app_strategy!(choose_app_strategy, Windows);
-    } else if #[cfg(target_os = "ios")] {
-        create_choose_app_strategy!(choose_app_strategy, Apple);
     } else {
         create_choose_app_strategy!(choose_app_strategy, Xdg);
     }
