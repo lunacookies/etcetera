@@ -7,7 +7,7 @@ use std::path::PathBuf;
 /// The arguments to the creator method of an [`AppStrategy`](trait.AppStrategy.html).
 #[derive(Debug)]
 pub struct AppStrategyArgs {
-    /// The top level domain of the application, e.g. `com` or `org`.
+    /// The top level domain of the application, e.g. `com`, `org`, or `io.github`.
     pub top_level_domain: String,
     /// The name of the author of the application.
     pub author: String,
