@@ -56,10 +56,10 @@ impl AppStrategyArgs {
     }
 }
 
-macro_rules! file_method_body {
-    ($self: ident, $file_name: ident, $dir_method_name: ident) => {{
+macro_rules! in_dir_method {
+    ($self: ident, $path_extra: expr, $dir_method_name: ident) => {{
         let mut path = $self.$dir_method_name();
-        path.push(Path::new(&$file_name));
+        path.push(Path::new(&$path_extra));
 
         path
     }};
@@ -82,19 +82,19 @@ pub trait AppStrategy: Sized {
     /// Gets the cache directory for your application.
     fn cache_dir(&self) -> PathBuf;
 
-    /// Constructs a path inside your application’s configuration directory to which a file name of your choice has been appended.
-    fn config_file<FileName: AsRef<OsStr>>(&self, file_name: FileName) -> PathBuf {
-        file_method_body!(self, file_name, config_dir)
+    /// Constructs a path inside your application’s configuration directory to which a path of your choice has been appended.
+    fn in_config_dir<P: AsRef<OsStr>>(&self, path: P) -> PathBuf {
+        in_dir_method!(self, path, config_dir)
     }
 
-    /// Constructs a path inside your application’s data directory to which a file name of your choice has been appended.
-    fn data_file<FileName: AsRef<OsStr>>(&self, file_name: FileName) -> PathBuf {
-        file_method_body!(self, file_name, data_dir)
+    /// Constructs a path inside your application’s data directory to which a path of your choice has been appended.
+    fn in_data_dir<P: AsRef<OsStr>>(&self, path: P) -> PathBuf {
+        in_dir_method!(self, path, data_dir)
     }
 
-    /// Constructs a path inside your application’s cache directory to which a file name of your choice has been appended.
-    fn cache_file<FileName: AsRef<OsStr>>(&self, file_name: FileName) -> PathBuf {
-        file_method_body!(self, file_name, cache_dir)
+    /// Constructs a path inside your application’s cache directory to which a path of your choice has been appended.
+    fn in_cache_dir<P: AsRef<OsStr>>(&self, path: P) -> PathBuf {
+        in_dir_method!(self, path, cache_dir)
     }
 }
 

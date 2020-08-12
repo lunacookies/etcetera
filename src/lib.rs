@@ -52,7 +52,7 @@
 //! // et cetera.
 //! ```
 //!
-//! Oftentimes the location of a configuration, data or cache directory is needed solely to locate a single file inside of it. For this purpose, [`AppStrategy`](app_strategy/trait.AppStrategy.html) implements a couple of convenience methods for you:
+//! Oftentimes the location of a configuration, data or cache directory is needed solely to create a path that starts inside it. For this purpose, [`AppStrategy`](app_strategy/trait.AppStrategy.html) implements a couple of convenience methods for you:
 //!
 //! ```
 //! use etcetera::app_strategy;
@@ -69,7 +69,7 @@
 //! let config_dir = strategy.config_dir();
 //!
 //! // Path to config.toml inside the configuration directory.
-//! let config_file = strategy.config_file("config.toml");
+//! let config_file = strategy.in_config_dir("config.toml");
 //!
 //! assert_eq!(config_dir.join("config.toml"), config_file);
 //! ```
