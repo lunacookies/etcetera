@@ -5,7 +5,7 @@ use std::path::PathBuf;
 /// Provides configuration, data and cache directories of the current user.
 pub trait BaseStrategy: Sized {
     /// The error type returned by `new`.
-    type CreationError;
+    type CreationError: std::error::Error;
 
     /// Base strategies are constructed without knowledge of the application.
     fn new() -> Result<Self, Self::CreationError>;

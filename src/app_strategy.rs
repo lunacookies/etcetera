@@ -68,7 +68,7 @@ macro_rules! in_dir_method {
 /// Allows applications to retrieve the paths of configuration, data and cache directories specifically for them.
 pub trait AppStrategy: Sized {
     /// The error type returned by `new`.
-    type CreationError;
+    type CreationError: std::error::Error;
 
     /// The constructor requires access to some basic information about your application.
     fn new(args: AppStrategyArgs) -> Result<Self, Self::CreationError>;
