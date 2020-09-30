@@ -81,9 +81,9 @@
 pub mod app_strategy;
 pub mod base_strategy;
 
-/// A convenience function that wraps the [`home_dir`](https://docs.rs/dirs/2/dirs/fn.home_dir.html) function from the [dirs](https://docs.rs/dirs) crate.
+/// A convenience function that wraps the [`home_dir`](https://docs.rs/dirs-next/1/dirs_next/fn.home_dir.html) function from the [dirs-next](https://docs.rs/dirs-next) crate.
 pub fn home_dir() -> Result<std::path::PathBuf, HomeDirError> {
-    dirs::home_dir().ok_or(HomeDirError)
+    dirs_next::home_dir().ok_or(HomeDirError)
 }
 
 /// This error occurs when the home directory cannot be located.

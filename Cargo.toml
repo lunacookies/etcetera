@@ -13,5 +13,5 @@ version = "0.3.0"
 
 [dependencies]
 cfg-if = "0.1"
-dirs = "3"
+dirs-next = "1"
 thiserror = "1"
