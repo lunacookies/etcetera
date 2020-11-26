@@ -12,6 +12,6 @@ repository = "https://github.com/arzg/etcetera"
 version = "0.3.1"
 
 [dependencies]
-cfg-if = "0.1"
-dirs-next = "1"
-thiserror = "1"
+cfg-if = "1.0.0"
+dirs-next = "2.0.0"
+thiserror = "1.0.22"
