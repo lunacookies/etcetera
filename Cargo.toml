@@ -9,7 +9,7 @@ license = "MIT OR Apache-2.0"
 name = "etcetera"
 readme = "README.md"
 repository = "https://github.com/arzg/etcetera"
-version = "0.3.1"
+version = "0.3.2"
 
 [dependencies]
 cfg-if = "1.0.0"
