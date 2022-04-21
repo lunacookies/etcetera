@@ -23,6 +23,10 @@ use std::path::PathBuf;
 ///     base_strategy.cache_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new("Library/Caches/")
 /// ));
+/// assert_eq!(
+///     base_strategy.state_dir(),
+///     None
+/// );
 /// ```
 #[derive(Debug)]
 pub struct Apple {
@@ -49,5 +53,9 @@ impl super::BaseStrategy for Apple {
 
     fn cache_dir(&self) -> PathBuf {
         self.library_path.join("Caches/")
+    }
+
+    fn state_dir(&self) -> Option<PathBuf> {
+        None
     }
 }

@@ -49,4 +49,8 @@ impl super::BaseStrategy for Windows {
     fn cache_dir(&self) -> PathBuf {
         self.appdata.join("Local/")
     }
+
+    fn state_dir(&self) -> Option<PathBuf> {
+        None
+    }
 }

@@ -30,6 +30,10 @@ use std::path::PathBuf;
 ///     app_strategy.cache_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new("Library/Caches/com.apple.Safari/")
 /// ));
+/// assert_eq!(
+///     app_strategy.state_dir(),
+///     None
+/// );
 /// ```
 #[derive(Debug)]
 pub struct Apple {
@@ -57,5 +61,9 @@ impl super::AppStrategy for Apple {
 
     fn cache_dir(&self) -> PathBuf {
         self.base_strategy.cache_dir().join(&self.bundle_id)
+    }
+
+    fn state_dir(&self) -> Option<PathBuf> {
+        None
     }
 }

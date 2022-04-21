@@ -82,6 +82,10 @@ pub trait AppStrategy: Sized {
     /// Gets the cache directory for your application.
     fn cache_dir(&self) -> PathBuf;
 
+    /// Gets the state directory for your application.
+    /// State directory may not to exist for all platforms.
+    fn state_dir(&self) -> Option<PathBuf>;
+
     /// Constructs a path inside your application’s configuration directory to which a path of your choice has been appended.
     fn in_config_dir<P: AsRef<OsStr>>(&self, path: P) -> PathBuf {
         in_dir_method!(self, path, config_dir)
