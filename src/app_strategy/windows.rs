@@ -30,6 +30,10 @@ use std::path::PathBuf;
 ///     app_strategy.cache_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new("AppData/Local/Microsoft/File Explorer/cache"))
 /// );
+/// assert_eq!(
+///     app_strategy.state_dir(),
+///     None
+/// );
 /// ```
 #[derive(Debug)]
 pub struct Windows {
@@ -67,5 +71,9 @@ impl super::AppStrategy for Windows {
 
     fn cache_dir(&self) -> PathBuf {
         dir_method!(self, cache_dir, "cache/")
+    }
+
+    fn state_dir(&self) -> Option<PathBuf> {
+        None
     }
 }

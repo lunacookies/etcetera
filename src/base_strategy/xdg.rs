@@ -13,6 +13,7 @@ use std::path::PathBuf;
 /// std::env::remove_var("XDG_CONFIG_HOME");
 /// std::env::remove_var("XDG_DATA_HOME");
 /// std::env::remove_var("XDG_CACHE_HOME");
+/// std::env::remove_var("XDG_STATE_HOME");
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
@@ -29,6 +30,10 @@ use std::path::PathBuf;
 /// assert_eq!(
 ///     base_strategy.cache_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new(".cache/")
+/// ));
+/// assert_eq!(
+///     base_strategy.state_dir().unwrap().strip_prefix(&home_dir),
+///     Ok(Path::new(".local/state")
 /// ));
 /// ```
 ///
@@ -55,16 +60,23 @@ use std::path::PathBuf;
 /// } else {
 ///     "/baz/"
 /// };
+/// let state_path = if cfg!(windows) {
+///     "C:\\foobar\\"
+/// } else {
+///     "/foobar/"
+/// };
 ///
 /// std::env::set_var("XDG_CONFIG_HOME", config_path);
 /// std::env::set_var("XDG_DATA_HOME", data_path);
 /// std::env::set_var("XDG_CACHE_HOME", cache_path);
+/// std::env::set_var("XDG_STATE_HOME", state_path);
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
 /// assert_eq!(base_strategy.config_dir(), Path::new(config_path));
 /// assert_eq!(base_strategy.data_dir(), Path::new(data_path));
 /// assert_eq!(base_strategy.cache_dir(), Path::new(cache_path));
+/// assert_eq!(base_strategy.state_dir().unwrap(), Path::new(state_path));
 /// ```
 ///
 /// The specification states that:
@@ -81,6 +93,7 @@ use std::path::PathBuf;
 /// std::env::set_var("XDG_CONFIG_HOME", "foo/");
 /// std::env::set_var("XDG_DATA_HOME", "bar/");
 /// std::env::set_var("XDG_CACHE_HOME", "baz/");
+/// std::env::set_var("XDG_STATE_HOME", "foobar/");
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
@@ -97,6 +110,10 @@ use std::path::PathBuf;
 /// assert_eq!(
 ///     base_strategy.cache_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new(".cache/")
+/// ));
+/// assert_eq!(
+///     base_strategy.state_dir().unwrap().strip_prefix(&home_dir),
+///     Ok(Path::new(".local/state/")
 /// ));
 /// ```
 #[derive(Debug)]
@@ -141,5 +158,9 @@ impl super::BaseStrategy for Xdg {
 
     fn cache_dir(&self) -> PathBuf {
         self.env_var_or_default("XDG_CACHE_HOME", ".cache/")
+    }
+
+    fn state_dir(&self) -> Option<PathBuf> {
+        Some(self.env_var_or_default("XDG_STATE_HOME", ".local/state/"))
     }
 }

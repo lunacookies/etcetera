@@ -13,6 +13,7 @@
 //! let config_dir = strategy.config_dir();
 //! let data_dir = strategy.data_dir();
 //! let cache_dir = strategy.cache_dir();
+//! let state_dir = strategy.state_dir();
 //! ```
 //!
 //! Here is an example where you provide Etcetera with some basic information about your application, and Etcetera will in turn give you a path that includes this information (this is called an ‘app strategy’).
@@ -33,6 +34,7 @@
 //! let config_dir = strategy.config_dir();
 //! let data_dir = strategy.data_dir();
 //! let cache_dir = strategy.cache_dir();
+//! let state_dir = strategy.state_dir();
 //! ```
 //!
 //! Say you were a hardened Unix veteran, and didn’t want to have any of this XDG nonsense, clutter in the home directory be damned! Instead of using `choose_app_strategy` or `choose_base_strategy`, you can pick a strategy yourself. Here’s an example using the [`Unix`](app_strategy/struct.Unix.html) strategy – see its documentation to see what kind of folder structures it produces:

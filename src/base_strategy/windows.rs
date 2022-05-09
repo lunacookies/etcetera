@@ -23,6 +23,10 @@ use std::path::PathBuf;
 ///     base_strategy.cache_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new("AppData/Local/"))
 /// );
+/// assert_eq!(
+///     base_strategy.state_dir(),
+///     None
+/// );
 /// ```
 #[derive(Debug)]
 pub struct Windows {
@@ -48,5 +52,9 @@ impl super::BaseStrategy for Windows {
 
     fn cache_dir(&self) -> PathBuf {
         self.appdata.join("Local/")
+    }
+
+    fn state_dir(&self) -> Option<PathBuf> {
+        None
     }
 }

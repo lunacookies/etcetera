@@ -28,6 +28,10 @@ use std::path::PathBuf;
 ///     app_strategy.cache_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new(".vim/cache/")
 /// ));
+/// assert_eq!(
+///     app_strategy.state_dir().unwrap().strip_prefix(&home_dir),
+///     Ok(Path::new(".vim/state/")
+/// ));
 /// ```
 #[derive(Debug)]
 pub struct Unix {
@@ -55,5 +59,9 @@ impl super::AppStrategy for Unix {
 
     fn cache_dir(&self) -> PathBuf {
         self.root_dir.join("cache/")
+    }
+
+    fn state_dir(&self) -> Option<PathBuf> {
+        Some(self.root_dir.join("state/"))
     }
 }
