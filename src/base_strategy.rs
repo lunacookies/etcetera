@@ -22,6 +22,10 @@ pub trait BaseStrategy: Sized {
     /// Gets the user’s state directory.
     /// State directory may not exist for all platforms.
     fn state_dir(&self) -> Option<PathBuf>;
+
+    /// Gets the user’s runtime directory.
+    /// Runtime directory may not exist for all platforms.
+    fn runtime_dir(&self) -> Option<PathBuf>;
 }
 
 macro_rules! create_choose_base_strategy {

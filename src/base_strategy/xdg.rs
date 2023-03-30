@@ -14,6 +14,7 @@ use std::path::PathBuf;
 /// std::env::remove_var("XDG_DATA_HOME");
 /// std::env::remove_var("XDG_CACHE_HOME");
 /// std::env::remove_var("XDG_STATE_HOME");
+/// std::env::remove_var("XDG_RUNTIME_DIR");
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
@@ -35,6 +36,10 @@ use std::path::PathBuf;
 ///     base_strategy.state_dir().unwrap().strip_prefix(&home_dir),
 ///     Ok(Path::new(".local/state")
 /// ));
+/// assert_eq!(
+///     base_strategy.runtime_dir(),
+///     None
+/// );
 /// ```
 ///
 /// And here is another example with the environment variables set to demonstrate that the strategy really does read them:
@@ -65,11 +70,17 @@ use std::path::PathBuf;
 /// } else {
 ///     "/foobar/"
 /// };
+/// let runtime_path = if cfg!(windows) {
+///     "C:\\qux\\"
+/// } else {
+///     "/qux/"
+/// };
 ///
 /// std::env::set_var("XDG_CONFIG_HOME", config_path);
 /// std::env::set_var("XDG_DATA_HOME", data_path);
 /// std::env::set_var("XDG_CACHE_HOME", cache_path);
 /// std::env::set_var("XDG_STATE_HOME", state_path);
+/// std::env::set_var("XDG_RUNTIME_DIR", runtime_path);
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
@@ -77,6 +88,7 @@ use std::path::PathBuf;
 /// assert_eq!(base_strategy.data_dir(), Path::new(data_path));
 /// assert_eq!(base_strategy.cache_dir(), Path::new(cache_path));
 /// assert_eq!(base_strategy.state_dir().unwrap(), Path::new(state_path));
+/// assert_eq!(base_strategy.runtime_dir().unwrap(), Path::new(runtime_path));
 /// ```
 ///
 /// The specification states that:
@@ -94,6 +106,7 @@ use std::path::PathBuf;
 /// std::env::set_var("XDG_DATA_HOME", "bar/");
 /// std::env::set_var("XDG_CACHE_HOME", "baz/");
 /// std::env::set_var("XDG_STATE_HOME", "foobar/");
+/// std::env::set_var("XDG_RUNTIME_DIR", "qux/");
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
@@ -115,6 +128,10 @@ use std::path::PathBuf;
 ///     base_strategy.state_dir().unwrap().strip_prefix(&home_dir),
 ///     Ok(Path::new(".local/state/")
 /// ));
+/// assert_eq!(
+///     base_strategy.runtime_dir(),
+///     None
+/// );
 /// ```
 #[derive(Debug)]
 pub struct Xdg {
@@ -122,20 +139,21 @@ pub struct Xdg {
 }
 
 impl Xdg {
-    fn env_var_or_default(&self, env_var: &str, default: impl AsRef<Path>) -> PathBuf {
-        std::env::var(env_var)
-            .ok()
-            .and_then(|path| {
-                let path = PathBuf::from(path);
+    fn env_var_or_none(env_var: &str) -> Option<PathBuf> {
+        std::env::var(env_var).ok().and_then(|path| {
+            let path = PathBuf::from(path);
 
-                // Return None if the path obtained from the environment variable isn’t absolute.
-                if path.is_absolute() {
-                    Some(path)
-                } else {
-                    None
-                }
-            })
-            .unwrap_or_else(|| self.home_dir.join(default))
+            // Return None if the path obtained from the environment variable isn’t absolute.
+            if path.is_absolute() {
+                Some(path)
+            } else {
+                None
+            }
+        })
+    }
+
+    fn env_var_or_default(&self, env_var: &str, default: impl AsRef<Path>) -> PathBuf {
+        Self::env_var_or_none(env_var).unwrap_or_else(|| self.home_dir.join(default))
     }
 }
 
@@ -162,5 +180,9 @@ impl super::BaseStrategy for Xdg {
 
     fn state_dir(&self) -> Option<PathBuf> {
         Some(self.env_var_or_default("XDG_STATE_HOME", ".local/state/"))
+    }
+
+    fn runtime_dir(&self) -> Option<PathBuf> {
+        Self::env_var_or_none("XDG_RUNTIME_DIR")
     }
 }
