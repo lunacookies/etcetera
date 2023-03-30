@@ -113,18 +113,24 @@ macro_rules! create_choose_app_strategy {
 
 cfg_if::cfg_if! {
     if #[cfg(target_os = "windows")] {
+        mod windows;
+
+        pub use windows::Windows;
+
         create_choose_app_strategy!(choose_app_strategy, Windows);
+    } else if #[cfg(any(target_os = "macos", target_os = "ios"))] {
+        mod apple;
+
+        pub use apple::Apple;
+
+        create_choose_app_strategy!(choose_app_strategy, Xdg);
     } else {
         create_choose_app_strategy!(choose_app_strategy, Xdg);
     }
 }
 
-mod apple;
 mod unix;
-mod windows;
 mod xdg;
 
-pub use apple::Apple;
 pub use unix::Unix;
-pub use windows::Windows;
 pub use xdg::Xdg;
