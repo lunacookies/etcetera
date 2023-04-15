@@ -51,7 +51,7 @@ impl super::AppStrategy for Apple {
     fn new(args: super::AppStrategyArgs) -> Result<Self, Self::CreationError> {
         Ok(Self {
             base_strategy: base_strategy::Apple::new()?,
-            bundle_id: args.bundle_id(),
+            bundle_id: args.bundle_id().replace(' ', ""),
         })
     }
 
