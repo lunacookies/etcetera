@@ -22,12 +22,12 @@ impl AppStrategyArgs {
     /// use etcetera::app_strategy::AppStrategyArgs;
     ///
     /// let strategy_args = AppStrategyArgs {
-    ///     top_level_domain: "com".to_string(),
-    ///     author: "Apple".to_string(),
-    ///     app_name: "Safari".to_string(),
+    ///     top_level_domain: "org".to_string(),
+    ///     author: "Acme Corp".to_string(),
+    ///     app_name: "Frobnicator Plus".to_string(),
     /// };
     ///
-    /// assert_eq!(strategy_args.bundle_id(), "com.apple.Safari".to_string());
+    /// assert_eq!(strategy_args.bundle_id().replace(' ', ""), "org.acmecorp.FrobnicatorPlus".to_string());
     /// ```
     pub fn bundle_id(&self) -> String {
         format!(
@@ -45,11 +45,11 @@ impl AppStrategyArgs {
     ///
     /// let strategy_args = AppStrategyArgs {
     ///     top_level_domain: "org".to_string(),
-    ///     author: "Mozilla".to_string(),
-    ///     app_name: "Firefox Developer Edition".to_string(),
+    ///     author: "Acme Corp".to_string(),
+    ///     app_name: "Frobnicator Plus".to_string(),
     /// };
     ///
-    /// assert_eq!(strategy_args.unixy_name(), "firefox-developer-edition".to_string());
+    /// assert_eq!(strategy_args.unixy_name(), "frobnicator-plus".to_string());
     /// ```
     pub fn unixy_name(&self) -> String {
         self.app_name.to_lowercase().replace(' ', "-")

@@ -1,6 +1,6 @@
 [package]
 categories = ["config"]
-description = "An unopinionated library for obtaining configuration, data and cache directories"
+description = "An unopinionated library for obtaining configuration, data, cache, & other directories"
 documentation = "https://docs.rs/etcetera"
 edition = "2018"
 homepage = "https://github.com/lunacookies/etcetera"

@@ -20,29 +20,29 @@ use std::path::PathBuf;
 /// std::env::remove_var("XDG_RUNTIME_DIR");
 ///
 /// let app_strategy = Xdg::new(AppStrategyArgs {
-///     top_level_domain: "hm".to_string(),
-///     author: "hisham".to_string(),
-///     app_name: "htop".to_string(),
+///     top_level_domain: "org".to_string(),
+///     author: "Acme Corp".to_string(),
+///     app_name: "Frobnicator Plus".to_string(),
 /// }).unwrap();
 ///
 /// let home_dir = etcetera::home_dir().unwrap();
 ///
 /// assert_eq!(
 ///     app_strategy.config_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".config/htop/")
-/// ));
+///     Ok(Path::new(".config/frobnicator-plus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.data_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".local/share/htop/")
-/// ));
+///     Ok(Path::new(".local/share/frobnicator-plus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.cache_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".cache/htop/")
-/// ));
+///     Ok(Path::new(".cache/frobnicator-plus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.state_dir().unwrap().strip_prefix(&home_dir),
-///     Ok(Path::new(".local/state/htop/")
-/// ));
+///     Ok(Path::new(".local/state/frobnicator-plus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.runtime_dir(),
 ///     None
@@ -91,16 +91,31 @@ use std::path::PathBuf;
 /// std::env::set_var("XDG_RUNTIME_DIR", runtime_path);
 ///
 /// let app_strategy = Xdg::new(AppStrategyArgs {
-///     top_level_domain: "hm".to_string(),
-///     author: "hisham".to_string(),
-///     app_name: "htop".to_string(),
+///     top_level_domain: "org".to_string(),
+///     author: "Acme Corp".to_string(),
+///     app_name: "Frobnicator Plus".to_string(),
 /// }).unwrap();
 ///
-/// assert_eq!(app_strategy.config_dir(), Path::new(&format!("{}/htop/", config_path)));
-/// assert_eq!(app_strategy.data_dir(), Path::new(&format!("{}/htop/", data_path)));
-/// assert_eq!(app_strategy.cache_dir(), Path::new(&format!("{}/htop/", cache_path)));
-/// assert_eq!(app_strategy.state_dir().unwrap(), Path::new(&format!("{}/htop/", state_path)));
-/// assert_eq!(app_strategy.runtime_dir().unwrap(), Path::new(&format!("{}/htop/", runtime_path)));
+/// assert_eq!(
+///     app_strategy.config_dir(),
+///     Path::new(&format!("{}/frobnicator-plus/", config_path))
+/// );
+/// assert_eq!(
+///     app_strategy.data_dir(),
+///     Path::new(&format!("{}/frobnicator-plus/", data_path))
+/// );
+/// assert_eq!(
+///     app_strategy.cache_dir(),
+///     Path::new(&format!("{}/frobnicator-plus/", cache_path))
+/// );
+/// assert_eq!(
+///     app_strategy.state_dir().unwrap(),
+///     Path::new(&format!("{}/frobnicator-plus/", state_path))
+/// );
+/// assert_eq!(
+///     app_strategy.runtime_dir().unwrap(),
+///     Path::new(&format!("{}/frobnicator-plus/", runtime_path))
+/// );
 /// ```
 ///
 /// The XDG spec requires that when the environment variables’ values are not absolute paths, their values should be ignored. This example exemplifies this behaviour:
@@ -119,9 +134,9 @@ use std::path::PathBuf;
 /// std::env::set_var("XDG_RUNTIME_DIR", "relative_path/");
 ///
 /// let app_strategy = Xdg::new(AppStrategyArgs {
-///     top_level_domain: "hm".to_string(),
-///     author: "hisham".to_string(),
-///     app_name: "htop".to_string(),
+///     top_level_domain: "org".to_string(),
+///     author: "Acme Corp".to_string(),
+///     app_name: "Frobnicator Plus".to_string(),
 /// }).unwrap();
 ///
 /// let home_dir = etcetera::home_dir().unwrap();
@@ -129,20 +144,20 @@ use std::path::PathBuf;
 /// // We still get the default values.
 /// assert_eq!(
 ///     app_strategy.config_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".config/htop/")
-/// ));
+///     Ok(Path::new(".config/frobnicator-plus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.data_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".local/share/htop/")
-/// ));
+///     Ok(Path::new(".local/share/frobnicator-plus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.cache_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".cache/htop/")
-/// ));
+///     Ok(Path::new(".cache/frobnicator-plus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.state_dir().unwrap().strip_prefix(&home_dir),
-///     Ok(Path::new(".local/state/htop/")
-/// ));
+///     Ok(Path::new(".local/state/frobnicator-plus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.runtime_dir(),
 ///     None

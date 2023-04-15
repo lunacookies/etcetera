@@ -11,24 +11,24 @@ use std::path::PathBuf;
 /// use std::path::Path;
 ///
 /// let app_strategy = Windows::new(AppStrategyArgs {
-///     top_level_domain: "com".to_string(),
-///     author: "Microsoft".to_string(),
-///     app_name: "File Explorer".to_string(),
+///     top_level_domain: "org".to_string(),
+///     author: "Acme Corp".to_string(),
+///     app_name: "Frobnicator Plus".to_string(),
 /// }).unwrap();
 ///
 /// let home_dir = etcetera::home_dir().unwrap();
 ///
 /// assert_eq!(
 ///     app_strategy.config_dir().strip_prefix(&home_dir),
-///     Ok(Path::new("AppData/Roaming/Microsoft/File Explorer/config"))
+///     Ok(Path::new("AppData/Roaming/Acme Corp/Frobnicator Plus/config"))
 /// );
 /// assert_eq!(
 ///     app_strategy.data_dir().strip_prefix(&home_dir),
-///     Ok(Path::new("AppData/Roaming/Microsoft/File Explorer/data"))
+///     Ok(Path::new("AppData/Roaming/Acme Corp/Frobnicator Plus/data"))
 /// );
 /// assert_eq!(
 ///     app_strategy.cache_dir().strip_prefix(&home_dir),
-///     Ok(Path::new("AppData/Local/Microsoft/File Explorer/cache"))
+///     Ok(Path::new("AppData/Local/Acme Corp/Frobnicator Plus/cache"))
 /// );
 /// assert_eq!(
 ///     app_strategy.state_dir(),

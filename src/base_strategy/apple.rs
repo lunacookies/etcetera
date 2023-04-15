@@ -13,16 +13,16 @@ use std::path::PathBuf;
 ///
 /// assert_eq!(
 ///     base_strategy.config_dir().strip_prefix(&home_dir),
-///     Ok(Path::new("Library/Preferences/")
-/// ));
+///     Ok(Path::new("Library/Preferences/"))
+/// );
 /// assert_eq!(
 ///     base_strategy.data_dir().strip_prefix(&home_dir),
-///     Ok(Path::new("Library/Application Support/")
-/// ));
+///     Ok(Path::new("Library/Application Support/"))
+/// );
 /// assert_eq!(
 ///     base_strategy.cache_dir().strip_prefix(&home_dir),
-///     Ok(Path::new("Library/Caches/")
-/// ));
+///     Ok(Path::new("Library/Caches/"))
+/// );
 /// assert_eq!(
 ///     base_strategy.state_dir(),
 ///     None

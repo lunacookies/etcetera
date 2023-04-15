@@ -10,36 +10,36 @@ use std::path::PathBuf;
 ///
 /// let app_strategy = Unix::new(AppStrategyArgs {
 ///     top_level_domain: "org".to_string(),
-///     author: "Bram Moolenar".to_string(),
-///     app_name: "Vim".to_string(),
+///     author: "Acme Corp".to_string(),
+///     app_name: "Frobnicator Plus".to_string(),
 /// }).unwrap();
 ///
 /// let home_dir = etcetera::home_dir().unwrap();
 ///
 /// assert_eq!(
 ///     app_strategy.config_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".vim/")
-/// ));
+///     Ok(Path::new(".frobnicator-plus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.data_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".vim/data/")
-/// ));
+///     Ok(Path::new(".frobnicator-plus/data/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.cache_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".vim/cache/")
-/// ));
+///     Ok(Path::new(".frobnicator-plus/cache/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.state_dir().unwrap().strip_prefix(&home_dir),
-///     Ok(Path::new(".vim/state/")
-/// ));
+///     Ok(Path::new(".frobnicator-plus/state/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.runtime_dir().unwrap().strip_prefix(&home_dir),
-///     Ok(Path::new(".vim/runtime/")
-/// ));
+///     Ok(Path::new(".frobnicator-plus/runtime/"))
+/// );
 /// ```
 #[derive(Debug)]
 pub struct Unix {
-    // This is `.vim` in the above example.
+    // This is `.frobnicator-plus` in the above example.
     root_dir: PathBuf,
 }
 
