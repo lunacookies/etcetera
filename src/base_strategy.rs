@@ -28,20 +28,32 @@ pub trait BaseStrategy: Sized {
     fn runtime_dir(&self) -> Option<PathBuf>;
 }
 
-macro_rules! create_choose_base_strategy {
-    ($name: ident, $ty: ty) => {
-        /// Returns the current OS’s default [`BaseStrategy`](trait.BaseStrategy.html). This uses the [`Windows`](struct.Windows.html) strategy on Windows, and [`Xdg`](struct.Xdg.html) everywhere else.
-        pub fn $name() -> Result<$ty, <$ty as BaseStrategy>::CreationError> {
-            <$ty>::new()
+macro_rules! create_strategies {
+    ($native: ty, $base: ty) => {
+        /// Returns the current OS’s native [`BaseStrategy`](trait.BaseStrategy.html).
+        /// This uses the [`Windows`](struct.Windows.html) strategy on Windows, [`Apple`](struct.Apple.html) on macOS & iOS, and [`Xdg`](struct.Xdg.html) everywhere else.
+        /// This is the convention used by most GUI applications.
+        pub fn choose_native_strategy() -> Result<$native, <$native as BaseStrategy>::CreationError>
+        {
+            <$native>::new()
+        }
+
+        /// Returns the current OS’s default [`BaseStrategy`](trait.BaseStrategy.html).
+        /// This uses the [`Windows`](struct.Windows.html) strategy on Windows, and [`Xdg`](struct.Xdg.html) everywhere else.
+        /// This is the convention used by most CLI applications.
+        pub fn choose_base_strategy() -> Result<$base, <$base as BaseStrategy>::CreationError> {
+            <$base>::new()
         }
     };
 }
 
 cfg_if::cfg_if! {
     if #[cfg(target_os = "windows")] {
-        create_choose_base_strategy!(choose_base_strategy, Windows);
+        create_strategies!(Windows, Windows);
+    } else if #[cfg(any(target_os = "macos", target_os = "ios"))] {
+        create_strategies!(Apple, Xdg);
     } else {
-        create_choose_base_strategy!(choose_base_strategy, Xdg);
+        create_strategies!(Xdg, Xdg);
     }
 }
 
