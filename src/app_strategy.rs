@@ -60,8 +60,12 @@ macro_rules! in_dir_method {
     ($self: ident, $path_extra: expr, $dir_method_name: ident) => {{
         let mut path = $self.$dir_method_name();
         path.push(Path::new(&$path_extra));
-
         path
+    }};
+    (opt: $self: ident, $path_extra: expr, $dir_method_name: ident) => {{
+        let mut path = $self.$dir_method_name()?;
+        path.push(Path::new(&$path_extra));
+        Some(path)
     }};
 }
 
@@ -103,6 +107,16 @@ pub trait AppStrategy: Sized {
     /// Constructs a path inside your application’s cache directory to which a path of your choice has been appended.
     fn in_cache_dir<P: AsRef<OsStr>>(&self, path: P) -> PathBuf {
         in_dir_method!(self, path, cache_dir)
+    }
+
+    /// Constructs a path inside your application’s state directory to which a path of your choice has been appended.
+    fn in_state_dir<P: AsRef<OsStr>>(&self, path: P) -> Option<PathBuf> {
+        in_dir_method!(opt: self, path, state_dir)
+    }
+
+    /// Constructs a path inside your application’s runtime directory to which a path of your choice has been appended.
+    fn in_runtime_dir<P: AsRef<OsStr>>(&self, path: P) -> Option<PathBuf> {
+        in_dir_method!(opt: self, path, runtime_dir)
     }
 }
 
