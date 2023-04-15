@@ -106,20 +106,35 @@ pub trait AppStrategy: Sized {
     }
 }
 
-macro_rules! create_choose_app_strategy {
-    ($name: ident, $ty: ty) => {
-        /// Returns the current OS’s default [`AppStrategy`](trait.AppStrategy.html). This uses the [`Windows`](struct.Windows.html) strategy on Windows, and [`Xdg`](struct.Xdg.html) everywhere else.
-        pub fn $name(args: AppStrategyArgs) -> Result<$ty, <$ty as AppStrategy>::CreationError> {
-            <$ty>::new(args)
+macro_rules! create_strategies {
+    ($native: ty, $app: ty) => {
+        /// Returns the current OS’s native [`AppStrategy`](trait.AppStrategy.html).
+        /// This uses the [`Windows`](struct.Windows.html) strategy on Windows, [`Apple`](struct.Apple.html) on macOS & iOS, and [`Xdg`](struct.Xdg.html) everywhere else.
+        /// This is the convention used by most GUI applications.
+        pub fn choose_native_strategy(
+            args: AppStrategyArgs,
+        ) -> Result<$native, <$native as AppStrategy>::CreationError> {
+            <$native>::new(args)
+        }
+
+        /// Returns the current OS’s default [`AppStrategy`](trait.AppStrategy.html).
+        /// This uses the [`Windows`](struct.Windows.html) strategy on Windows, and [`Xdg`](struct.Xdg.html) everywhere else.
+        /// This is the convention used by most CLI applications.
+        pub fn choose_app_strategy(
+            args: AppStrategyArgs,
+        ) -> Result<$app, <$app as AppStrategy>::CreationError> {
+            <$app>::new(args)
         }
     };
 }
 
 cfg_if::cfg_if! {
     if #[cfg(target_os = "windows")] {
-        create_choose_app_strategy!(choose_app_strategy, Windows);
+        create_strategies!(Windows, Windows);
+    } else if #[cfg(any(target_os = "macos", target_os = "ios"))] {
+        create_strategies!(Apple, Xdg);
     } else {
-        create_choose_app_strategy!(choose_app_strategy, Xdg);
+        create_strategies!(Xdg, Xdg);
     }
 }
 
