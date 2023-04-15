@@ -86,6 +86,10 @@ pub trait AppStrategy: Sized {
     /// State directory may not to exist for all platforms.
     fn state_dir(&self) -> Option<PathBuf>;
 
+    /// Gets the runtime directory for your application.
+    /// Runtime directory may not to exist for all platforms.
+    fn runtime_dir(&self) -> Option<PathBuf>;
+
     /// Constructs a path inside your application’s configuration directory to which a path of your choice has been appended.
     fn in_config_dir<P: AsRef<OsStr>>(&self, path: P) -> PathBuf {
         in_dir_method!(self, path, config_dir)

@@ -17,6 +17,7 @@ use std::path::PathBuf;
 /// std::env::remove_var("XDG_DATA_HOME");
 /// std::env::remove_var("XDG_CACHE_HOME");
 /// std::env::remove_var("XDG_STATE_HOME");
+/// std::env::remove_var("XDG_RUNTIME_DIR");
 ///
 /// let app_strategy = Xdg::new(AppStrategyArgs {
 ///     top_level_domain: "hm".to_string(),
@@ -42,6 +43,10 @@ use std::path::PathBuf;
 ///     app_strategy.state_dir().unwrap().strip_prefix(&home_dir),
 ///     Ok(Path::new(".local/state/htop/")
 /// ));
+/// assert_eq!(
+///     app_strategy.runtime_dir(),
+///     None
+/// );
 /// ```
 ///
 /// This next example gives the environment variables values:
@@ -73,11 +78,17 @@ use std::path::PathBuf;
 /// } else {
 ///     "/my_state_location/"
 /// };
+/// let runtime_path = if cfg!(windows) {
+///     "C:\\my_runtime_location\\"
+/// } else {
+///     "/my_runtime_location/"
+/// };
 ///
 /// std::env::set_var("XDG_CONFIG_HOME", config_path);
 /// std::env::set_var("XDG_DATA_HOME", data_path);
 /// std::env::set_var("XDG_CACHE_HOME", cache_path);
 /// std::env::set_var("XDG_STATE_HOME", state_path);
+/// std::env::set_var("XDG_RUNTIME_DIR", runtime_path);
 ///
 /// let app_strategy = Xdg::new(AppStrategyArgs {
 ///     top_level_domain: "hm".to_string(),
@@ -89,6 +100,7 @@ use std::path::PathBuf;
 /// assert_eq!(app_strategy.data_dir(), Path::new(&format!("{}/htop/", data_path)));
 /// assert_eq!(app_strategy.cache_dir(), Path::new(&format!("{}/htop/", cache_path)));
 /// assert_eq!(app_strategy.state_dir().unwrap(), Path::new(&format!("{}/htop/", state_path)));
+/// assert_eq!(app_strategy.runtime_dir().unwrap(), Path::new(&format!("{}/htop/", runtime_path)));
 /// ```
 ///
 /// The XDG spec requires that when the environment variables’ values are not absolute paths, their values should be ignored. This example exemplifies this behaviour:
@@ -104,6 +116,7 @@ use std::path::PathBuf;
 /// std::env::set_var("XDG_DATA_HOME", "./another_one/");
 /// std::env::set_var("XDG_CACHE_HOME", "yet_another/");
 /// std::env::set_var("XDG_STATE_HOME", "./and_another");
+/// std::env::set_var("XDG_RUNTIME_DIR", "relative_path/");
 ///
 /// let app_strategy = Xdg::new(AppStrategyArgs {
 ///     top_level_domain: "hm".to_string(),
@@ -130,6 +143,10 @@ use std::path::PathBuf;
 ///     app_strategy.state_dir().unwrap().strip_prefix(&home_dir),
 ///     Ok(Path::new(".local/state/htop/")
 /// ));
+/// assert_eq!(
+///     app_strategy.runtime_dir(),
+///     None
+/// );
 /// ```
 #[derive(Debug)]
 pub struct Xdg {
@@ -166,5 +183,11 @@ impl super::AppStrategy for Xdg {
                 .unwrap()
                 .join(&self.unixy_name),
         )
+    }
+
+    fn runtime_dir(&self) -> Option<PathBuf> {
+        self.base_strategy
+            .runtime_dir()
+            .map(|runtime_dir| runtime_dir.join(&self.unixy_name))
     }
 }

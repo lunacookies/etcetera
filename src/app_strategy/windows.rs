@@ -34,6 +34,10 @@ use std::path::PathBuf;
 ///     app_strategy.state_dir(),
 ///     None
 /// );
+/// assert_eq!(
+///     app_strategy.runtime_dir(),
+///     None
+/// );
 /// ```
 #[derive(Debug)]
 pub struct Windows {
@@ -74,6 +78,10 @@ impl super::AppStrategy for Windows {
     }
 
     fn state_dir(&self) -> Option<PathBuf> {
+        None
+    }
+
+    fn runtime_dir(&self) -> Option<PathBuf> {
         None
     }
 }

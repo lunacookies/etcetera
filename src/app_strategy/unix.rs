@@ -32,6 +32,10 @@ use std::path::PathBuf;
 ///     app_strategy.state_dir().unwrap().strip_prefix(&home_dir),
 ///     Ok(Path::new(".vim/state/")
 /// ));
+/// assert_eq!(
+///     app_strategy.runtime_dir().unwrap().strip_prefix(&home_dir),
+///     Ok(Path::new(".vim/runtime/")
+/// ));
 /// ```
 #[derive(Debug)]
 pub struct Unix {
@@ -63,5 +67,9 @@ impl super::AppStrategy for Unix {
 
     fn state_dir(&self) -> Option<PathBuf> {
         Some(self.root_dir.join("state/"))
+    }
+
+    fn runtime_dir(&self) -> Option<PathBuf> {
+        Some(self.root_dir.join("runtime/"))
     }
 }
