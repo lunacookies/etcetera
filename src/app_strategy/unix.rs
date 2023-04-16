@@ -37,7 +37,7 @@ use std::path::PathBuf;
 ///     Ok(Path::new(".vim/runtime/")
 /// ));
 /// ```
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Unix {
     // This is `.vim` in the above example.
     root_dir: PathBuf,

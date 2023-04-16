@@ -39,7 +39,7 @@ use std::path::PathBuf;
 ///     None
 /// );
 /// ```
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Windows {
     base_strategy: base_strategy::Windows,
     author_app_name_path: PathBuf,

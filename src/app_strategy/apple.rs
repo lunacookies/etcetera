@@ -39,7 +39,7 @@ use std::path::PathBuf;
 ///     None
 /// );
 /// ```
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Apple {
     base_strategy: base_strategy::Apple,
     bundle_id: String,
