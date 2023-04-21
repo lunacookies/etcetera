@@ -148,7 +148,7 @@ use std::path::PathBuf;
 ///     None
 /// );
 /// ```
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Xdg {
     base_strategy: base_strategy::Xdg,
     unixy_name: String,

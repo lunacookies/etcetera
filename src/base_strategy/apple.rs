@@ -32,7 +32,7 @@ use std::path::PathBuf;
 ///     None
 /// );
 /// ```
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Apple {
     library_path: PathBuf,
 }
