@@ -1,8 +1,8 @@
-//! These strategies simply provide the user’s configuration, data and cache directories, without knowing about the application specifically.
+//! These strategies simply provide the user’s configuration, data, and cache directories, without knowing about the application specifically.
 
 use std::path::PathBuf;
 
-/// Provides configuration, data and cache directories of the current user.
+/// Provides configuration, data, and cache directories of the current user.
 pub trait BaseStrategy: Sized {
     /// The error type returned by `new`.
     type CreationError: std::error::Error;
@@ -20,11 +20,11 @@ pub trait BaseStrategy: Sized {
     fn cache_dir(&self) -> PathBuf;
 
     /// Gets the user’s state directory.
-    /// State directory may not exist for all platforms.
+    /// State directory may not exist for all conventions.
     fn state_dir(&self) -> Option<PathBuf>;
 
     /// Gets the user’s runtime directory.
-    /// Runtime directory may not exist for all platforms.
+    /// Runtime directory may not exist for all conventions.
     fn runtime_dir(&self) -> Option<PathBuf>;
 }
 

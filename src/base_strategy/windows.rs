@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-/// This strategy follows Windows’ conventions. It seems that all Windows GUI apps, and some command-line ones follow this pattern.
+/// This strategy follows Windows’ conventions. It seems that all Windows GUI apps, and some command-line ones follow this pattern. The specification is available [here](https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid).
 ///
 /// ```
 /// use etcetera::base_strategy::BaseStrategy;

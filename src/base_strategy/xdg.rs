@@ -3,13 +3,14 @@ use std::path::PathBuf;
 
 /// This strategy implements the [XDG Base Directories Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html). It is the most common on Linux, but is increasingly being adopted elsewhere.
 ///
-/// In this first example the relevant XDG environment variables have been unset so as to demonstrate the strategy’s behaviour when it has to fall back to the defaults.
+/// This initial example removes all the XDG environment variables to show the strategy’s use of the XDG default directories.
 ///
 /// ```
 /// use etcetera::base_strategy::BaseStrategy;
 /// use etcetera::base_strategy::Xdg;
 /// use std::path::Path;
 ///
+/// // Remove the environment variables that the strategy reads from.
 /// std::env::remove_var("XDG_CONFIG_HOME");
 /// std::env::remove_var("XDG_DATA_HOME");
 /// std::env::remove_var("XDG_CACHE_HOME");
@@ -42,7 +43,7 @@ use std::path::PathBuf;
 /// );
 /// ```
 ///
-/// And here is another example with the environment variables set to demonstrate that the strategy really does read them:
+/// This next example gives the environment variables values:
 ///
 /// ```
 /// use etcetera::base_strategy::BaseStrategy;
@@ -106,17 +107,14 @@ use std::path::PathBuf;
 /// );
 /// ```
 ///
-/// The specification states that:
-///
-/// > All paths set in these environment variables must be absolute. If an implementation encounters a relative path in any of these variables it should consider the path invalid and ignore it.
-///
-/// In this example the environment variables have been given relative values. The strategy behaves correctly and uses the defaults:
+/// The XDG spec requires that when the environment variables’ values are not absolute paths, their values should be ignored. This example exemplifies this behaviour:
 ///
 /// ```
 /// use etcetera::base_strategy::BaseStrategy;
 /// use etcetera::base_strategy::Xdg;
 /// use std::path::Path;
 ///
+/// // Remove the environment variables that the strategy reads from.
 /// std::env::set_var("XDG_CONFIG_HOME", "foo/");
 /// std::env::set_var("XDG_DATA_HOME", "bar/");
 /// std::env::set_var("XDG_CACHE_HOME", "baz/");
@@ -127,6 +125,7 @@ use std::path::PathBuf;
 ///
 /// let home_dir = etcetera::home_dir().unwrap();
 ///
+/// // We still get the default values.
 /// assert_eq!(
 ///     base_strategy.config_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new(".config/"))
