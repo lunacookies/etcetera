@@ -11,25 +11,25 @@ use std::path::PathBuf;
 /// use std::path::Path;
 ///
 /// let app_strategy = Apple::new(AppStrategyArgs {
-///     top_level_domain: "com".to_string(),
-///     author: "Apple".to_string(),
-///     app_name: "Safari".to_string(),
+///     top_level_domain: "org".to_string(),
+///     author: "Acme Corp".to_string(),
+///     app_name: "Frobnicator Plus".to_string(),
 /// }).unwrap();
 ///
 /// let home_dir = etcetera::home_dir().unwrap();
 ///
 /// assert_eq!(
 ///     app_strategy.config_dir().strip_prefix(&home_dir),
-///     Ok(Path::new("Library/Preferences/com.apple.Safari/")
-/// ));
+///     Ok(Path::new("Library/Preferences/org.acmecorp.FrobnicatorPlus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.data_dir().strip_prefix(&home_dir),
-///     Ok(Path::new("Library/Application Support/com.apple.Safari/")
-/// ));
+///     Ok(Path::new("Library/Application Support/org.acmecorp.FrobnicatorPlus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.cache_dir().strip_prefix(&home_dir),
-///     Ok(Path::new("Library/Caches/com.apple.Safari/")
-/// ));
+///     Ok(Path::new("Library/Caches/org.acmecorp.FrobnicatorPlus/"))
+/// );
 /// assert_eq!(
 ///     app_strategy.state_dir(),
 ///     None
@@ -51,7 +51,7 @@ impl super::AppStrategy for Apple {
     fn new(args: super::AppStrategyArgs) -> Result<Self, Self::CreationError> {
         Ok(Self {
             base_strategy: base_strategy::Apple::new()?,
-            bundle_id: args.bundle_id(),
+            bundle_id: args.bundle_id().replace(' ', ""),
         })
     }
 

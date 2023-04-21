@@ -22,12 +22,12 @@ impl AppStrategyArgs {
     /// use etcetera::app_strategy::AppStrategyArgs;
     ///
     /// let strategy_args = AppStrategyArgs {
-    ///     top_level_domain: "com".to_string(),
-    ///     author: "Apple".to_string(),
-    ///     app_name: "Safari".to_string(),
+    ///     top_level_domain: "org".to_string(),
+    ///     author: "Acme Corp".to_string(),
+    ///     app_name: "Frobnicator Plus".to_string(),
     /// };
     ///
-    /// assert_eq!(strategy_args.bundle_id(), "com.apple.Safari".to_string());
+    /// assert_eq!(strategy_args.bundle_id().replace(' ', ""), "org.acmecorp.FrobnicatorPlus".to_string());
     /// ```
     pub fn bundle_id(&self) -> String {
         format!(
@@ -45,11 +45,11 @@ impl AppStrategyArgs {
     ///
     /// let strategy_args = AppStrategyArgs {
     ///     top_level_domain: "org".to_string(),
-    ///     author: "Mozilla".to_string(),
-    ///     app_name: "Firefox Developer Edition".to_string(),
+    ///     author: "Acme Corp".to_string(),
+    ///     app_name: "Frobnicator Plus".to_string(),
     /// };
     ///
-    /// assert_eq!(strategy_args.unixy_name(), "firefox-developer-edition".to_string());
+    /// assert_eq!(strategy_args.unixy_name(), "frobnicator-plus".to_string());
     /// ```
     pub fn unixy_name(&self) -> String {
         self.app_name.to_lowercase().replace(' ', "-")
@@ -60,8 +60,12 @@ macro_rules! in_dir_method {
     ($self: ident, $path_extra: expr, $dir_method_name: ident) => {{
         let mut path = $self.$dir_method_name();
         path.push(Path::new(&$path_extra));
-
         path
+    }};
+    (opt: $self: ident, $path_extra: expr, $dir_method_name: ident) => {{
+        let mut path = $self.$dir_method_name()?;
+        path.push(Path::new(&$path_extra));
+        Some(path)
     }};
 }
 
@@ -103,6 +107,16 @@ pub trait AppStrategy: Sized {
     /// Constructs a path inside your application’s cache directory to which a path of your choice has been appended.
     fn in_cache_dir<P: AsRef<OsStr>>(&self, path: P) -> PathBuf {
         in_dir_method!(self, path, cache_dir)
+    }
+
+    /// Constructs a path inside your application’s state directory to which a path of your choice has been appended.
+    fn in_state_dir<P: AsRef<OsStr>>(&self, path: P) -> Option<PathBuf> {
+        in_dir_method!(opt: self, path, state_dir)
+    }
+
+    /// Constructs a path inside your application’s runtime directory to which a path of your choice has been appended.
+    fn in_runtime_dir<P: AsRef<OsStr>>(&self, path: P) -> Option<PathBuf> {
+        in_dir_method!(opt: self, path, runtime_dir)
     }
 }
 

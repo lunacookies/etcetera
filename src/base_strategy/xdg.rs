@@ -22,20 +22,20 @@ use std::path::PathBuf;
 ///
 /// assert_eq!(
 ///     base_strategy.config_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".config/")
-/// ));
+///     Ok(Path::new(".config/"))
+/// );
 /// assert_eq!(
 ///     base_strategy.data_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".local/share/")
-/// ));
+///     Ok(Path::new(".local/share/"))
+/// );
 /// assert_eq!(
 ///     base_strategy.cache_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".cache/")
-/// ));
+///     Ok(Path::new(".cache/"))
+/// );
 /// assert_eq!(
 ///     base_strategy.state_dir().unwrap().strip_prefix(&home_dir),
-///     Ok(Path::new(".local/state")
-/// ));
+///     Ok(Path::new(".local/state"))
+/// );
 /// assert_eq!(
 ///     base_strategy.runtime_dir(),
 ///     None
@@ -84,11 +84,26 @@ use std::path::PathBuf;
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
-/// assert_eq!(base_strategy.config_dir(), Path::new(config_path));
-/// assert_eq!(base_strategy.data_dir(), Path::new(data_path));
-/// assert_eq!(base_strategy.cache_dir(), Path::new(cache_path));
-/// assert_eq!(base_strategy.state_dir().unwrap(), Path::new(state_path));
-/// assert_eq!(base_strategy.runtime_dir().unwrap(), Path::new(runtime_path));
+/// assert_eq!(
+///     base_strategy.config_dir(),
+///     Path::new(config_path)
+/// );
+/// assert_eq!(
+///     base_strategy.data_dir(),
+///     Path::new(data_path)
+/// );
+/// assert_eq!(
+///     base_strategy.cache_dir(),
+///     Path::new(cache_path)
+/// );
+/// assert_eq!(
+///     base_strategy.state_dir().unwrap(),
+///     Path::new(state_path)
+/// );
+/// assert_eq!(
+///     base_strategy.runtime_dir().unwrap(),
+///     Path::new(runtime_path)
+/// );
 /// ```
 ///
 /// The specification states that:
@@ -114,20 +129,20 @@ use std::path::PathBuf;
 ///
 /// assert_eq!(
 ///     base_strategy.config_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".config/")
-/// ));
+///     Ok(Path::new(".config/"))
+/// );
 /// assert_eq!(
 ///     base_strategy.data_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".local/share/")
-/// ));
+///     Ok(Path::new(".local/share/"))
+/// );
 /// assert_eq!(
 ///     base_strategy.cache_dir().strip_prefix(&home_dir),
-///     Ok(Path::new(".cache/")
-/// ));
+///     Ok(Path::new(".cache/"))
+/// );
 /// assert_eq!(
 ///     base_strategy.state_dir().unwrap().strip_prefix(&home_dir),
-///     Ok(Path::new(".local/state/")
-/// ));
+///     Ok(Path::new(".local/state/"))
+/// );
 /// assert_eq!(
 ///     base_strategy.runtime_dir(),
 ///     None

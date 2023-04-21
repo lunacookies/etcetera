@@ -1,9 +1,10 @@
 [package]
 categories = ["config"]
-description = "An unopinionated library for obtaining configuration, data and cache directories"
+description = "An unopinionated library for obtaining configuration, data, cache, & other directories"
 documentation = "https://docs.rs/etcetera"
 edition = "2018"
 homepage = "https://github.com/lunacookies/etcetera"
+keywords = ["xdg", "dirs", "directories", "directory", "basedir", "app_dirs", "cli_dirs", "config", "path", "folder"]
 license = "MIT OR Apache-2.0"
 name = "etcetera"
 readme = "README.md"
@@ -13,4 +14,3 @@ version = "0.5.0"
 [dependencies]
 cfg-if = "1.0.0"
 home = "0.5.4"
-thiserror = "1.0.22"
