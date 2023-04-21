@@ -69,7 +69,7 @@ macro_rules! in_dir_method {
     }};
 }
 
-/// Allows applications to retrieve the paths of configuration, data and cache directories specifically for them.
+/// Allows applications to retrieve the paths of configuration, data, and cache directories specifically for them.
 pub trait AppStrategy: Sized {
     /// The error type returned by `new`.
     type CreationError: std::error::Error;
@@ -87,11 +87,11 @@ pub trait AppStrategy: Sized {
     fn cache_dir(&self) -> PathBuf;
 
     /// Gets the state directory for your application.
-    /// State directory may not to exist for all platforms.
+    /// State directory may not to exist for all conventions.
     fn state_dir(&self) -> Option<PathBuf>;
 
     /// Gets the runtime directory for your application.
-    /// Runtime directory may not to exist for all platforms.
+    /// Runtime directory may not to exist for all conventions.
     fn runtime_dir(&self) -> Option<PathBuf>;
 
     /// Constructs a path inside your application’s configuration directory to which a path of your choice has been appended.

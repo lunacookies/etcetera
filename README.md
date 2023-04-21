@@ -5,14 +5,18 @@
 
 # Etcetera
 
-This is a Rust library that allows you to determine the locations of configuration, data, cache & other files for your application. Existing Rust libraries generally do not give you a choice in terms of which standards/conventions (Etcetera calls these ‘strategies’) they follow. Etcetera, on the other hand, gives you the choice.
+This is a Rust library that allows you to determine the locations of configuration, data, cache & other files for your application.
+Existing Rust libraries generally do not give you a choice in terms of which standards/conventions they follow.
+Etcetera, on the other hand, gives you the choice.
 
-Etcetera supports the following strategies:
+## Conventions
+Etcetera supports the following conventions:
 - the [XDG base directory](https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html)
-- the [Known Folder Locations](https://msdn.microsoft.com/en-us/library/windows/desktop/dd378457.aspx)
-- the [Standard Directories](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html)
-- the "Unix Single-folder Strategy" i.e. everything in `~/.myapp`
+- Apple's [Standard Directories](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html)
+- Window's [Known Folder Locations](https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid)
+- the "Unix Single-folder Convention" i.e. everything in `~/.myapp`
 
+## Strategies
 Etcetera has 2 modes of operation: `BaseStrategy` & `AppStrategy`:
 - With `BaseStrategy`, you just get the location of the respective directory. For eg. for `config_dir()`:
   - XDG: `~/.config`
@@ -27,10 +31,12 @@ Etcetera has 2 modes of operation: `BaseStrategy` & `AppStrategy`:
 
 Note: the location of the home (~) is determined by the [`home`](https://docs.rs/home/0.5.4/home/fn.home_dir.html) crate.
 
+### Convenience functions
 Etcetera also provides convenience functions for selecting the appropriate strategy on each platform:
 - `base_strategy::choose_base_strategy` & `app_strategy::choose_app_strategy`: Uses `Windows` on Windows & `XDG` everywhere else.
   This is used by most CLI tools & some GUI tools on each platform.
 - `base_strategy::choose_native_strategy` & `app_strategy::choose_native_strategy`: Uses `Windows` on Windows, `Apple` on macOS/iOS, & `XDG` everywhere else.
   This is used by most GUI applications on each platform.
 
-See the documentation for examples.
+##
+See the ![documentation](https://docs.rs/etcetera) for examples.

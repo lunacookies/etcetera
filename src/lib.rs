@@ -1,10 +1,19 @@
-//! This is a Rust library that allows you to determine the locations of configuration, data, cache & other files for your application. Existing Rust libraries generally do not give you a choice in terms of which standards/conventions (Etcetera calls these ‘strategies’) they follow. Etcetera, on the other hand, gives you the choice.
+//! This is a Rust library that allows you to determine the locations of configuration, data, cache & other files for your application.
+//! Existing Rust libraries generally do not give you a choice in terms of which standards/conventions they follow.
+//! Etcetera, on the other hand, gives you the choice.
+//!
+//! # Conventions
+//! Etcetera supports the following conventions:
+//! - the [XDG base directory](https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+//! - Apple's [Standard Directories](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html)
+//! - Window's [Known Folder Locations](https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid)
+//! - the "Unix Single-folder Convention" i.e. everything in `~/.myapp`
 //!
 //! # Strategies
-//! If you want to get started quickly, you can use the provided convenience functions that use the default strategies (as determined arbitrarily by yours truly) or the native strategies for each OS.
+//! If you want to get started quickly, you can use the following convenience functions that use the default strategies (as determined arbitrarily by yours truly) or the native strategies for each OS.
 //!
 //! ## BaseStrategy
-//! This first example is for when you just want the path to a configuration, data or cache directory (this is called a ‘base strategy’):
+//! If you just want to get the path to a configuration, data, cache or another directory, you can use the `choose_base_strategy` function.
 //!
 //! ```
 //! use etcetera::base_strategy;
@@ -20,15 +29,13 @@
 //! ```
 //!
 //! ## AppStrategy
-//! Here is an example where you provide Etcetera with some basic information about your application, and Etcetera will in turn give you a path that includes this information (this is called an ‘app strategy’).
+//! If you want to get the path to a configuration, data, cache or another directory, and you want to follow the naming conventions for your application, you can use the `choose_app_strategy` function.
 //!
-//! Let’s take an application created by Acme Corp with the name Frobnicator Plus and the top-level domain of `.org` as an example.
+//! Let’s take an application created by `Acme Corp` with the name `Frobnicator Plus` and the top-level domain of `jrg` as an example.
 //! - XDG strategy would place these in `~/.config/frobnicator-plus`.
 //! - Unix strategy would place these in `~/.frobnicator-plus`.
 //! - Apple strategy would place these in `~/Library/Preferences/org.acmecorp.FrobnicatorPlus`.
 //! - Windows strategy would place these in `~\AppData\Roaming\Acme Corp\Frobnicator Plus`.
-//!
-//! Etcetera takes care of the distinctions.
 //!
 //! ```
 //! use etcetera::app_strategy;
@@ -54,11 +61,11 @@
 //! This is used by most CLI tools & some GUI tools on each platform.
 //!
 //! If you're developing a GUI application, you might want to use the "Standard directories" on macOS by using `choose_native_strategy()` instead.
-//! Note that if your application expects the user to modify the configuration files, you still should prefer the `XDG` strategy on macOS.
+//! Note that if your application expects the user to modify the configuration files, you should still prefer the `XDG` strategy on macOS.
 //!
-//! ## Custom Strategies
+//! ## Custom Conventions
 //!
-//! You aren’t limited to the built-in strategies, however – you can implement the relevant traits yourself. Please consider contributing these back, as the more preset strategies there are, the better.
+//! You aren’t limited to the built-in conventions – you can implement the relevant traits yourself. Please consider contributing these back, as the more preset conventions there are, the better.
 //!
 //! # More Examples
 //! Say you were a hardened Unix veteran, and didn’t want to have any of this XDG nonsense, clutter in the home directory be damned! Instead of using `choose_app_strategy` or `choose_base_strategy`, you can pick a strategy yourself. Here’s an example using the [`Unix`](app_strategy/struct.Unix.html) strategy – see its documentation to see what kind of folder structures it produces:
