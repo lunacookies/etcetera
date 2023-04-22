@@ -16,10 +16,9 @@
 //! If you just want to get the path to a configuration, data, cache or another directory, you can use the `choose_base_strategy` function.
 //!
 //! ```
-//! use etcetera::base_strategy;
-//! use etcetera::base_strategy::BaseStrategy;
+//! use etcetera::{choose_base_strategy, BaseStrategy};
 //!
-//! let strategy = base_strategy::choose_base_strategy().unwrap();
+//! let strategy = choose_base_strategy().unwrap();
 //!
 //! let config_dir = strategy.config_dir();
 //! let data_dir = strategy.data_dir();
@@ -38,11 +37,9 @@
 //! - Windows strategy would place these in `~\AppData\Roaming\Acme Corp\Frobnicator Plus`.
 //!
 //! ```
-//! use etcetera::app_strategy;
-//! use etcetera::app_strategy::AppStrategy;
-//! use etcetera::app_strategy::AppStrategyArgs;
+//! use etcetera::{choose_app_strategy, AppStrategy, AppStrategyArgs};
 //!
-//! let strategy = app_strategy::choose_app_strategy(AppStrategyArgs {
+//! let strategy = choose_app_strategy(AppStrategyArgs {
 //!     top_level_domain: "org".to_string(),
 //!     author: "Acme Corp".to_string(),
 //!     app_name: "Frobnicator Plus".to_string(),
@@ -71,9 +68,7 @@
 //! Say you were a hardened Unix veteran, and didn’t want to have any of this XDG nonsense, clutter in the home directory be damned! Instead of using `choose_app_strategy` or `choose_base_strategy`, you can pick a strategy yourself. Here’s an example using the [`Unix`](app_strategy/struct.Unix.html) strategy – see its documentation to see what kind of folder structures it produces:
 //!
 //! ```
-//! use etcetera::app_strategy;
-//! use etcetera::app_strategy::AppStrategy;
-//! use etcetera::app_strategy::AppStrategyArgs;
+//! use etcetera::{app_strategy, AppStrategy, AppStrategyArgs};
 //!
 //! let strategy = app_strategy::Unix::new(AppStrategyArgs {
 //!     top_level_domain: "com".to_string(),
@@ -88,11 +83,9 @@
 //! Oftentimes the location of a configuration, data or cache directory is needed solely to create a path that starts inside it. For this purpose, [`AppStrategy`](app_strategy/trait.AppStrategy.html) implements a couple of convenience methods for you:
 //!
 //! ```
-//! use etcetera::app_strategy;
-//! use etcetera::app_strategy::AppStrategy;
-//! use etcetera::app_strategy::AppStrategyArgs;
+//! use etcetera::{choose_app_strategy, AppStrategy, AppStrategyArgs};
 //!
-//! let strategy = app_strategy::choose_app_strategy(AppStrategyArgs {
+//! let strategy = choose_app_strategy(AppStrategyArgs {
 //!     top_level_domain: "org".to_string(),
 //!     author: "Acme Corp".to_string(),
 //!     app_name: "Frobnicator".to_string(),
