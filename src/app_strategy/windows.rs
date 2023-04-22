@@ -1,6 +1,6 @@
 use crate::base_strategy;
 use crate::base_strategy::BaseStrategy;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 /// This strategy follows Windows’ conventions. It seems that all Windows GUI apps, and some command-line ones follow this pattern. The specification is available [here](https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid).
 ///
@@ -18,6 +18,10 @@ use std::path::PathBuf;
 ///
 /// let home_dir = etcetera::home_dir().unwrap();
 ///
+/// assert_eq!(
+///     app_strategy.home_dir(),
+///     &home_dir
+/// );
 /// assert_eq!(
 ///     app_strategy.config_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new("AppData/Roaming/Acme Corp/Frobnicator Plus/config"))
@@ -63,6 +67,10 @@ impl super::AppStrategy for Windows {
             base_strategy: base_strategy::Windows::new()?,
             author_app_name_path: PathBuf::from(format!("{}/{}", args.author, args.app_name)),
         })
+    }
+
+    fn home_dir(&self) -> &Path {
+        self.base_strategy.home_dir()
     }
 
     fn config_dir(&self) -> PathBuf {

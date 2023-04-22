@@ -112,6 +112,9 @@
 pub mod app_strategy;
 pub mod base_strategy;
 
+pub use app_strategy::{choose_app_strategy, AppStrategy, AppStrategyArgs};
+pub use base_strategy::{choose_base_strategy, BaseStrategy};
+
 /// A convenience function that wraps the [`home_dir`](https://docs.rs/home/0.5.4/home/fn.home_dir.html) function from the [home](https://docs.rs/home) crate.
 pub fn home_dir() -> Result<std::path::PathBuf, HomeDirError> {
     home::home_dir().ok_or(HomeDirError)

@@ -22,6 +22,10 @@ use std::path::PathBuf;
 /// let home_dir = etcetera::home_dir().unwrap();
 ///
 /// assert_eq!(
+///     base_strategy.home_dir(),
+///     &home_dir
+/// );
+/// assert_eq!(
 ///     base_strategy.config_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new(".config/"))
 /// );
@@ -86,6 +90,10 @@ use std::path::PathBuf;
 /// let base_strategy = Xdg::new().unwrap();
 ///
 /// assert_eq!(
+///     base_strategy.home_dir(),
+///     etcetera::home_dir().unwrap()
+/// );
+/// assert_eq!(
 ///     base_strategy.config_dir(),
 ///     Path::new(config_path)
 /// );
@@ -126,6 +134,10 @@ use std::path::PathBuf;
 /// let home_dir = etcetera::home_dir().unwrap();
 ///
 /// // We still get the default values.
+/// assert_eq!(
+///     base_strategy.home_dir(),
+///     &home_dir
+/// );
 /// assert_eq!(
 ///     base_strategy.config_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new(".config/"))
@@ -178,6 +190,10 @@ impl super::BaseStrategy for Xdg {
         Ok(Self {
             home_dir: crate::home_dir()?,
         })
+    }
+
+    fn home_dir(&self) -> &Path {
+        &self.home_dir
     }
 
     fn config_dir(&self) -> PathBuf {
