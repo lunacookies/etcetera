@@ -1,6 +1,6 @@
 use crate::base_strategy;
 use crate::base_strategy::BaseStrategy;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 /// This strategy implements the [XDG Base Directories Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html). It is the most common on Linux, but is increasingly being adopted elsewhere.
 ///
@@ -27,6 +27,10 @@ use std::path::PathBuf;
 ///
 /// let home_dir = etcetera::home_dir().unwrap();
 ///
+/// assert_eq!(
+///     app_strategy.home_dir(),
+///     &home_dir
+/// );
 /// assert_eq!(
 ///     app_strategy.config_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new(".config/frobnicator-plus/"))
@@ -177,6 +181,10 @@ impl super::AppStrategy for Xdg {
             base_strategy: base_strategy::Xdg::new()?,
             unixy_name: args.unixy_name(),
         })
+    }
+
+    fn home_dir(&self) -> &Path {
+        self.base_strategy.home_dir()
     }
 
     fn config_dir(&self) -> PathBuf {

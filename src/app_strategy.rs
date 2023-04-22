@@ -77,6 +77,9 @@ pub trait AppStrategy: Sized {
     /// The constructor requires access to some basic information about your application.
     fn new(args: AppStrategyArgs) -> Result<Self, Self::CreationError>;
 
+    /// Gets the home directory of the current user.
+    fn home_dir(&self) -> &Path;
+
     /// Gets the configuration directory for your application.
     fn config_dir(&self) -> PathBuf;
 

@@ -1,6 +1,6 @@
 //! These strategies simply provide the user’s configuration, data, and cache directories, without knowing about the application specifically.
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 /// Provides configuration, data, and cache directories of the current user.
 pub trait BaseStrategy: Sized {
@@ -9,6 +9,9 @@ pub trait BaseStrategy: Sized {
 
     /// Base strategies are constructed without knowledge of the application.
     fn new() -> Result<Self, Self::CreationError>;
+
+    /// Gets the home directory of the current user.
+    fn home_dir(&self) -> &Path;
 
     /// Gets the user’s configuration directory.
     fn config_dir(&self) -> PathBuf;

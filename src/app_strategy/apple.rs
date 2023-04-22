@@ -1,6 +1,6 @@
 use crate::base_strategy;
 use crate::base_strategy::BaseStrategy;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 /// This is the strategy created by Apple for use on macOS and iOS devices. It is always used by GUI apps on macOS, and is sometimes used by command-line applications there too. iOS only has GUIs, so all iOS applications follow this strategy. The specification is available [here](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW1).
 ///
@@ -18,6 +18,10 @@ use std::path::PathBuf;
 ///
 /// let home_dir = etcetera::home_dir().unwrap();
 ///
+/// assert_eq!(
+///     app_strategy.home_dir(),
+///     &home_dir
+/// );
 /// assert_eq!(
 ///     app_strategy.config_dir().strip_prefix(&home_dir),
 ///     Ok(Path::new("Library/Preferences/org.acmecorp.FrobnicatorPlus/"))
@@ -53,6 +57,10 @@ impl super::AppStrategy for Apple {
             base_strategy: base_strategy::Apple::new()?,
             bundle_id: args.bundle_id().replace(' ', ""),
         })
+    }
+
+    fn home_dir(&self) -> &Path {
+        self.base_strategy.home_dir()
     }
 
     fn config_dir(&self) -> PathBuf {
