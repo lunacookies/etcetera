@@ -55,15 +55,15 @@ impl super::BaseStrategy for Windows {
     }
 
     fn config_dir(&self) -> PathBuf {
-        self.home_dir.join("AppData/Roaming/")
+        self.home_dir.join("AppData").join("Roaming")
     }
 
     fn data_dir(&self) -> PathBuf {
-        self.home_dir.join("AppData/Roaming/")
+        self.home_dir.join("AppData").join("Roaming")
     }
 
     fn cache_dir(&self) -> PathBuf {
-        self.home_dir.join("AppData/Local/")
+        self.home_dir.join("AppData").join("Local")
     }
 
     fn state_dir(&self) -> Option<PathBuf> {

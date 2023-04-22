@@ -65,7 +65,7 @@ impl super::AppStrategy for Windows {
     fn new(args: super::AppStrategyArgs) -> Result<Self, Self::CreationError> {
         Ok(Self {
             base_strategy: base_strategy::Windows::new()?,
-            author_app_name_path: PathBuf::from(format!("{}/{}", args.author, args.app_name)),
+            author_app_name_path: PathBuf::from(args.author).join(args.app_name),
         })
     }
 
@@ -74,15 +74,15 @@ impl super::AppStrategy for Windows {
     }
 
     fn config_dir(&self) -> PathBuf {
-        dir_method!(self, config_dir, "config/")
+        dir_method!(self, config_dir, "config")
     }
 
     fn data_dir(&self) -> PathBuf {
-        dir_method!(self, data_dir, "data/")
+        dir_method!(self, data_dir, "data")
     }
 
     fn cache_dir(&self) -> PathBuf {
-        dir_method!(self, cache_dir, "cache/")
+        dir_method!(self, cache_dir, "cache")
     }
 
     fn state_dir(&self) -> Option<PathBuf> {
