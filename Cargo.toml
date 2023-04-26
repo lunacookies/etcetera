@@ -12,5 +12,9 @@ repository = "https://github.com/lunacookies/etcetera"
 version = "0.7.1"
 
 [dependencies]
-cfg-if = "1.0.0"
-home = "0.5.4"
+cfg-if = "1"
+home = "0.5"
+
+# We should keep this in sync with the `home` crate.
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.48", features = ["Win32_Foundation", "Win32_UI_Shell"] }
