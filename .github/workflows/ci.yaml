@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   check_fmt:
-    name: fmt ${{ github.sha }}
+    name: Formatting
     runs-on: ubuntu-latest
 
     steps:
@@ -13,6 +13,8 @@ jobs:
         with:
           toolchain: stable
           override: true
+          profile: minimal
+          components: rustfmt
 
       - uses: actions-rs/cargo@v1
         with:
