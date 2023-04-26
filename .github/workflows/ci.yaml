@@ -1,6 +1,10 @@
 name: CI
 on: [push, pull_request]
 
+env:
+  RUSTFLAGS: "--deny warnings"
+  MIRIFLAGS: "-Zmiri-strict-provenance"
+
 jobs:
   check_fmt:
     name: fmt ${{ github.sha }}
@@ -23,7 +27,11 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        task: [['test', ''], ['clippy', '-- --deny warnings']]
+        task: [
+          ['stable', '', 'test', '--all-features'],
+          ['stable', 'clippy', 'clippy', '--all-targets --all-features'],
+          ['nightly', 'miri', 'miri', 'test --all-features']
+        ]
 
     name: ${{ matrix.task[0] }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -33,11 +41,11 @@ jobs:
 
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: ${{ matrix.task[0] }}
           override: true
-          components: clippy
+          components: ${{ matrix.task[1] }}
 
       - uses: actions-rs/cargo@v1
         with:
-          command: ${{ matrix.task[0] }}
-          args: ${{ matrix.task[1] }}
+          command: ${{ matrix.task[2] }}
+          args: ${{ matrix.task[3] }}
