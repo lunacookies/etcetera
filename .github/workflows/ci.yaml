@@ -1,45 +1,47 @@
 name: CI
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+  schedule:
+    - cron: '0 0 * * FRI'
+  workflow_dispatch:
 
 jobs:
-  check_fmt:
+  rustfmt:
     name: Formatting
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: stable
-          override: true
-          profile: minimal
+          toolchain: nightly
           components: rustfmt
 
-      - uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: -- --check
+      - run: cargo fmt --all --check
 
   ci:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        task: [['test', ''], ['clippy', '-- --deny warnings']]
+        toolchain: [nightly, stable, 1.54.0]
 
-    name: ${{ matrix.task[0] }} on ${{ matrix.os }}
+    name: Test on ${{ matrix.os }} with Rust ${{ matrix.toolchain }}
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: stable
-          override: true
+          toolchain: ${{ matrix.toolchain }}
           components: clippy
 
-      - uses: actions-rs/cargo@v1
-        with:
-          command: ${{ matrix.task[0] }}
-          args: ${{ matrix.task[1] }}
+      - run: cargo clippy -- -Dwarnings
+
+      - run: cargo test
