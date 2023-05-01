@@ -9,6 +9,8 @@ This is a Rust library that allows you to determine the locations of configurati
 Existing Rust libraries generally do not give you a choice in terms of which standards/conventions they follow.
 Etcetera, on the other hand, gives you the choice.
 
+MSRV: 1.54.0
+
 ## Conventions
 Etcetera supports the following conventions:
 - the [XDG base directory](https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html)

@@ -9,6 +9,7 @@ license = "MIT OR Apache-2.0"
 name = "etcetera"
 readme = "README.md"
 repository = "https://github.com/lunacookies/etcetera"
+rust-version = "1.54.0"
 version = "0.8.0"
 
 [dependencies]
