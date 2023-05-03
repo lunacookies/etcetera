@@ -173,6 +173,32 @@ pub struct Xdg {
     unixy_name: String,
 }
 
+impl Xdg {
+    /// Returns the path to the directory where the User-specific executable files may be stored.
+    ///
+    /// Note: This uses the `$XDG_BIN_HOME` environment variable, which is not yet part of the
+    /// XDG spec. See [this](https://gitlab.freedesktop.org/xdg/xdg-specs/-/issues/14) issue.
+    pub fn bin_dir(&self) -> PathBuf {
+        self.base_strategy.bin_dir()
+    }
+
+    /// `$XDG_DATA_DIRS` defines the preference-ordered set of base directories to search for data
+    /// files in addition to the `$XDG_DATA_HOME` base directory.
+    ///
+    /// NOTE: The directories in `$XDG_DATA_DIRS` should be seperated with a colon ':'.
+    pub fn data_dirs() -> Vec<PathBuf> {
+        base_strategy::Xdg::data_dirs()
+    }
+
+    /// `$XDG_CONFIG_DIRS` defines the preference-ordered set of base directories to search for
+    /// configuration files in addition to the `$XDG_CONFIG_HOME` base directory.
+    ///
+    /// Note: The directories in `$XDG_CONFIG_DIRS` should be seperated with a colon ':'.
+    pub fn config_dirs() -> Vec<PathBuf> {
+        base_strategy::Xdg::config_dirs()
+    }
+}
+
 impl super::AppStrategy for Xdg {
     type CreationError = crate::HomeDirError;
 
