@@ -90,11 +90,19 @@ pub trait AppStrategy: Sized {
     fn cache_dir(&self) -> PathBuf;
 
     /// Gets the state directory for your application.
-    /// State directory may not to exist for all conventions.
+    /// Currently, only the [`Xdg`](struct.Xdg.html) & [`Unix`](struct.Unix.html) strategies support
+    /// this.
     fn state_dir(&self) -> Option<PathBuf>;
 
     /// Gets the runtime directory for your application.
-    /// Runtime directory may not to exist for all conventions.
+    /// Currently, only the [`Xdg`](struct.Xdg.html) & [`Unix`](struct.Unix.html) strategies support
+    /// this.
+    ///
+    /// Note: The [XDG Base Directory Specification](spec) places additional requirements on this
+    /// directory related to ownership, permissions, and persistence. This library does not check
+    /// these requirements.
+    ///
+    /// [spec]: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
     fn runtime_dir(&self) -> Option<PathBuf>;
 
     /// Constructs a path inside your application’s configuration directory to which a path of your choice has been appended.
@@ -113,11 +121,17 @@ pub trait AppStrategy: Sized {
     }
 
     /// Constructs a path inside your application’s state directory to which a path of your choice has been appended.
+    ///
+    /// Currently, this is only implemented for the [`Xdg`](struct.Xdg.html) strategy.
     fn in_state_dir<P: AsRef<OsStr>>(&self, path: P) -> Option<PathBuf> {
         in_dir_method!(opt: self, path, state_dir)
     }
 
     /// Constructs a path inside your application’s runtime directory to which a path of your choice has been appended.
+    /// Currently, only the [`Xdg`](struct.Xdg.html) & [`Unix`](struct.Unix.html) strategies support
+    /// this.
+    ///
+    /// See the note in [`runtime_dir`](#method.runtime_dir) for more information.
     fn in_runtime_dir<P: AsRef<OsStr>>(&self, path: P) -> Option<PathBuf> {
         in_dir_method!(opt: self, path, runtime_dir)
     }

@@ -23,11 +23,17 @@ pub trait BaseStrategy: Sized {
     fn cache_dir(&self) -> PathBuf;
 
     /// Gets the user’s state directory.
-    /// State directory may not exist for all conventions.
+    /// Currently, only the [`Xdg`](struct.Xdg.html) strategy supports this.
     fn state_dir(&self) -> Option<PathBuf>;
 
     /// Gets the user’s runtime directory.
-    /// Runtime directory may not exist for all conventions.
+    /// Currently, only the [`Xdg`](struct.Xdg.html) strategy supports this.
+    ///
+    /// Note: The [XDG Base Directory Specification](spec) places additional requirements on this
+    /// directory related to ownership, permissions, and persistence. This library does not check
+    /// these requirements.
+    ///
+    /// [spec]: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
     fn runtime_dir(&self) -> Option<PathBuf>;
 }
 
