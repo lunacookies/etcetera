@@ -28,7 +28,7 @@ Etcetera has 2 modes of operation: `BaseStrategy` & `AppStrategy`:
   For eg. if you provide the following details: `{ top_level_domain: "org", author: "Acme Corp", app_name: "Frobnicator Plus" }`, you'll get:
   - XDG: `~/.config/frobnicator-plus`
   - Unix: `~/.frobnicator-plus`
-  - Apple: `~/Library/Preferences/org.acmecorp.FrobnicatorPlus`
+  - Apple: `~/Library/Preferences/org.acme-corp.Frobnicator-Plus`
   - Windows: `~\AppData\Roaming\Acme Corp\Frobnicator Plus`
 
 Note: the location of the home (~) is determined by the [`home`](https://docs.rs/home/0.5.4/home/fn.home_dir.html) crate.
