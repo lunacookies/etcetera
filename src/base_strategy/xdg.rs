@@ -1,6 +1,8 @@
 use std::path::Path;
 use std::path::PathBuf;
 
+use crate::HomeDirError;
+
 /// This strategy implements the [XDG Base Directories Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html). It is the most common on Linux, but is increasingly being adopted elsewhere.
 ///
 /// This initial example removes all the XDG environment variables to show the strategy’s use of the XDG default directories.
@@ -157,6 +159,13 @@ pub struct Xdg {
 }
 
 impl Xdg {
+    /// Create a new Xdg BaseStrategy
+    pub fn new() -> Result<Self, HomeDirError> {
+        Ok(Self {
+            home_dir: crate::home_dir()?,
+        })
+    }
+
     fn env_var_or_none(env_var: &str) -> Option<PathBuf> {
         std::env::var(env_var).ok().and_then(|path| {
             let path = PathBuf::from(path);
@@ -176,14 +185,6 @@ impl Xdg {
 }
 
 impl super::BaseStrategy for Xdg {
-    type CreationError = crate::HomeDirError;
-
-    fn new() -> Result<Self, Self::CreationError> {
-        Ok(Self {
-            home_dir: crate::home_dir()?,
-        })
-    }
-
     fn home_dir(&self) -> &Path {
         &self.home_dir
     }

@@ -1,5 +1,7 @@
 use std::path::{Path, PathBuf};
 
+use crate::HomeDirError;
+
 /// This strategy has no standard or official specification. It has arisen over time through hundreds of Unixy tools. Vim and Cargo are notable examples whose configuration/data/cache directory layouts are similar to those created by this strategy.
 ///
 /// ```
@@ -48,16 +50,17 @@ pub struct Unix {
     unixy_name: String,
 }
 
-impl super::AppStrategy for Unix {
-    type CreationError = crate::HomeDirError;
-
-    fn new(args: super::AppStrategyArgs) -> Result<Self, Self::CreationError> {
+impl Unix {
+    /// Create a new Unix AppStrategy
+    pub fn new(args: super::AppStrategyArgs) -> Result<Self, HomeDirError> {
         Ok(Self {
             home_dir: crate::home_dir()?,
             unixy_name: format!(".{}", args.unixy_name()),
         })
     }
+}
 
+impl super::AppStrategy for Unix {
     fn home_dir(&self) -> &Path {
         &self.home_dir
     }

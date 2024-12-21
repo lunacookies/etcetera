@@ -4,6 +4,8 @@ use std::ffi::OsStr;
 use std::path::Path;
 use std::path::PathBuf;
 
+use crate::HomeDirError;
+
 /// The arguments to the creator method of an [`AppStrategy`](trait.AppStrategy.html).
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 pub struct AppStrategyArgs {
@@ -70,13 +72,7 @@ macro_rules! in_dir_method {
 }
 
 /// Allows applications to retrieve the paths of configuration, data, and cache directories specifically for them.
-pub trait AppStrategy: Sized {
-    /// The error type returned by `new`.
-    type CreationError: std::error::Error;
-
-    /// The constructor requires access to some basic information about your application.
-    fn new(args: AppStrategyArgs) -> Result<Self, Self::CreationError>;
-
+pub trait AppStrategy {
     /// Gets the home directory of the current user.
     fn home_dir(&self) -> &Path;
 
@@ -142,18 +138,14 @@ macro_rules! create_strategies {
         /// Returns the current OS’s native [`AppStrategy`](trait.AppStrategy.html).
         /// This uses the [`Windows`](struct.Windows.html) strategy on Windows, [`Apple`](struct.Apple.html) on macOS & iOS, and [`Xdg`](struct.Xdg.html) everywhere else.
         /// This is the convention used by most GUI applications.
-        pub fn choose_native_strategy(
-            args: AppStrategyArgs,
-        ) -> Result<$native, <$native as AppStrategy>::CreationError> {
+        pub fn choose_native_strategy(args: AppStrategyArgs) -> Result<$native, HomeDirError> {
             <$native>::new(args)
         }
 
         /// Returns the current OS’s default [`AppStrategy`](trait.AppStrategy.html).
         /// This uses the [`Windows`](struct.Windows.html) strategy on Windows, and [`Xdg`](struct.Xdg.html) everywhere else.
         /// This is the convention used by most CLI applications.
-        pub fn choose_app_strategy(
-            args: AppStrategyArgs,
-        ) -> Result<$app, <$app as AppStrategy>::CreationError> {
+        pub fn choose_app_strategy(args: AppStrategyArgs) -> Result<$app, HomeDirError> {
             <$app>::new(args)
         }
     };

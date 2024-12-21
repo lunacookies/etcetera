@@ -1,5 +1,5 @@
-use crate::base_strategy;
 use crate::base_strategy::BaseStrategy;
+use crate::{base_strategy, HomeDirError};
 use std::path::{Path, PathBuf};
 
 /// This strategy implements the [XDG Base Directories Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html). It is the most common on Linux, but is increasingly being adopted elsewhere.
@@ -173,16 +173,17 @@ pub struct Xdg {
     unixy_name: String,
 }
 
-impl super::AppStrategy for Xdg {
-    type CreationError = crate::HomeDirError;
-
-    fn new(args: super::AppStrategyArgs) -> Result<Self, Self::CreationError> {
+impl Xdg {
+    /// Create a new Xdg AppStrategy
+    pub fn new(args: super::AppStrategyArgs) -> Result<Self, HomeDirError> {
         Ok(Self {
             base_strategy: base_strategy::Xdg::new()?,
             unixy_name: args.unixy_name(),
         })
     }
+}
 
+impl super::AppStrategy for Xdg {
     fn home_dir(&self) -> &Path {
         self.base_strategy.home_dir()
     }

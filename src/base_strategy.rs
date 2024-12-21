@@ -1,15 +1,10 @@
 //! These strategies simply provide the user’s configuration, data, and cache directories, without knowing about the application specifically.
 
+use crate::HomeDirError;
 use std::path::{Path, PathBuf};
 
 /// Provides configuration, data, and cache directories of the current user.
-pub trait BaseStrategy: Sized {
-    /// The error type returned by `new`.
-    type CreationError: std::error::Error;
-
-    /// Base strategies are constructed without knowledge of the application.
-    fn new() -> Result<Self, Self::CreationError>;
-
+pub trait BaseStrategy {
     /// Gets the home directory of the current user.
     fn home_dir(&self) -> &Path;
 
@@ -42,15 +37,14 @@ macro_rules! create_strategies {
         /// Returns the current OS’s native [`BaseStrategy`](trait.BaseStrategy.html).
         /// This uses the [`Windows`](struct.Windows.html) strategy on Windows, [`Apple`](struct.Apple.html) on macOS & iOS, and [`Xdg`](struct.Xdg.html) everywhere else.
         /// This is the convention used by most GUI applications.
-        pub fn choose_native_strategy() -> Result<$native, <$native as BaseStrategy>::CreationError>
-        {
+        pub fn choose_native_strategy() -> Result<$native, HomeDirError> {
             <$native>::new()
         }
 
         /// Returns the current OS’s default [`BaseStrategy`](trait.BaseStrategy.html).
         /// This uses the [`Windows`](struct.Windows.html) strategy on Windows, and [`Xdg`](struct.Xdg.html) everywhere else.
         /// This is the convention used by most CLI applications.
-        pub fn choose_base_strategy() -> Result<$base, <$base as BaseStrategy>::CreationError> {
+        pub fn choose_base_strategy() -> Result<$base, HomeDirError> {
             <$base>::new()
         }
     };
