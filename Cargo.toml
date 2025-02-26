@@ -18,4 +18,4 @@ home = "0.5"
 
 # We should keep this in sync with the `home` crate.
 [target.'cfg(windows)'.dependencies]
-windows-sys = { version = "0.48", features = ["Win32_Foundation", "Win32_UI_Shell"] }
+windows-sys = { version = ">=0.48, <=0.59", features = ["Win32_Foundation", "Win32_UI_Shell"] }
