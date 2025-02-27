@@ -1,5 +1,7 @@
 use std::path::{Path, PathBuf};
 
+use crate::HomeDirError;
+
 /// This strategy follows Windows’ conventions. It seems that all Windows GUI apps, and some command-line ones follow this pattern. The specification is available [here](https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid).
 ///
 /// This initial example removes all the relevant environment variables to show the strategy’s use of the:
@@ -109,6 +111,13 @@ pub struct Windows {
 // Ref: https://github.com/rust-lang/cargo/blob/home-0.5.5/crates/home/src/windows.rs
 // We should keep this code in sync with the above.
 impl Windows {
+    /// Create a new Windows BaseStrategy
+    pub fn new() -> Result<Self, HomeDirError> {
+        Ok(Self {
+            home_dir: crate::home_dir()?,
+        })
+    }
+
     fn dir_inner(env: &'static str) -> Option<PathBuf> {
         std::env::var_os(env)
             .filter(|s| !s.is_empty())
@@ -155,14 +164,6 @@ impl Windows {
 }
 
 impl super::BaseStrategy for Windows {
-    type CreationError = crate::HomeDirError;
-
-    fn new() -> Result<Self, Self::CreationError> {
-        Ok(Self {
-            home_dir: crate::home_dir()?,
-        })
-    }
-
     fn home_dir(&self) -> &Path {
         &self.home_dir
     }

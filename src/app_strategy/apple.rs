@@ -1,5 +1,5 @@
-use crate::base_strategy;
 use crate::base_strategy::BaseStrategy;
+use crate::{base_strategy, HomeDirError};
 use std::path::{Path, PathBuf};
 
 /// This is the strategy created by Apple for use on macOS and iOS devices. It is always used by GUI apps on macOS, and is sometimes used by command-line applications there too. iOS only has GUIs, so all iOS applications follow this strategy. The specification is available [here](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW1).
@@ -49,16 +49,17 @@ pub struct Apple {
     bundle_id: String,
 }
 
-impl super::AppStrategy for Apple {
-    type CreationError = crate::HomeDirError;
-
-    fn new(args: super::AppStrategyArgs) -> Result<Self, Self::CreationError> {
+impl Apple {
+    /// Create a new Apple AppStrategy
+    pub fn new(args: super::AppStrategyArgs) -> Result<Self, HomeDirError> {
         Ok(Self {
             base_strategy: base_strategy::Apple::new()?,
             bundle_id: args.bundle_id().replace(' ', ""),
         })
     }
+}
 
+impl super::AppStrategy for Apple {
     fn home_dir(&self) -> &Path {
         self.base_strategy.home_dir()
     }
