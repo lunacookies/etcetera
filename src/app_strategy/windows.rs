@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 /// This strategy follows Windows’ conventions. It seems that all Windows GUI apps, and some command-line ones follow this pattern. The specification is available [here](https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid).
 ///
 /// This initial example removes all the relevant environment variables to show the strategy’s use of the:
-/// - (on Windows) SHGetFolderPathW API.
+/// - (on Windows) SHGetKnownFolderPath API.
 /// - (on non-Windows) Windows default directories.
 ///
 /// ```
