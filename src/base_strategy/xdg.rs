@@ -13,11 +13,13 @@ use crate::HomeDirError;
 /// use std::path::Path;
 ///
 /// // Remove the environment variables that the strategy reads from.
+/// unsafe {
 /// std::env::remove_var("XDG_CONFIG_HOME");
 /// std::env::remove_var("XDG_DATA_HOME");
 /// std::env::remove_var("XDG_CACHE_HOME");
 /// std::env::remove_var("XDG_STATE_HOME");
 /// std::env::remove_var("XDG_RUNTIME_DIR");
+/// }
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
@@ -83,11 +85,13 @@ use crate::HomeDirError;
 ///     "/qux/"
 /// };
 ///
+/// unsafe {
 /// std::env::set_var("XDG_CONFIG_HOME", config_path);
 /// std::env::set_var("XDG_DATA_HOME", data_path);
 /// std::env::set_var("XDG_CACHE_HOME", cache_path);
 /// std::env::set_var("XDG_STATE_HOME", state_path);
 /// std::env::set_var("XDG_RUNTIME_DIR", runtime_path);
+/// }
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
@@ -121,11 +125,13 @@ use crate::HomeDirError;
 /// use std::path::Path;
 ///
 /// // Remove the environment variables that the strategy reads from.
+/// unsafe {
 /// std::env::set_var("XDG_CONFIG_HOME", "foo/");
 /// std::env::set_var("XDG_DATA_HOME", "bar/");
 /// std::env::set_var("XDG_CACHE_HOME", "baz/");
 /// std::env::set_var("XDG_STATE_HOME", "foobar/");
 /// std::env::set_var("XDG_RUNTIME_DIR", "qux/");
+/// }
 ///
 /// let base_strategy = Xdg::new().unwrap();
 ///
@@ -171,11 +177,7 @@ impl Xdg {
             let path = PathBuf::from(path);
 
             // Return None if the path obtained from the environment variable isn’t absolute.
-            if path.is_absolute() {
-                Some(path)
-            } else {
-                None
-            }
+            if path.is_absolute() { Some(path) } else { None }
         })
     }
 

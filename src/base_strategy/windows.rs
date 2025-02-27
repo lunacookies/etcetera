@@ -14,9 +14,11 @@ use crate::HomeDirError;
 /// use std::path::Path;
 ///
 /// // Remove the environment variables that the strategy reads from.
+/// unsafe {
 /// std::env::remove_var("USERPROFILE");
 /// std::env::remove_var("APPDATA");
 /// std::env::remove_var("LOCALAPPDATA");
+/// }
 ///
 /// let base_strategy = Windows::new().unwrap();
 ///
@@ -71,9 +73,11 @@ use crate::HomeDirError;
 ///     "/baz/"
 /// };
 ///
+/// unsafe {
 /// std::env::set_var("USERPROFILE", &home_path);
 /// std::env::set_var("APPDATA", data_path);
 /// std::env::set_var("LOCALAPPDATA", cache_path);
+/// }
 ///
 /// let base_strategy = Windows::new().unwrap();
 ///
@@ -135,11 +139,11 @@ impl Windows {
         use windows_sys::Win32::Foundation::S_OK;
         use windows_sys::Win32::System::Com::CoTaskMemFree;
         use windows_sys::Win32::UI::Shell::{
-            FOLDERID_LocalAppData, FOLDERID_RoamingAppData, SHGetKnownFolderPath,
-            KF_FLAG_DONT_VERIFY,
+            FOLDERID_LocalAppData, FOLDERID_RoamingAppData, KF_FLAG_DONT_VERIFY,
+            SHGetKnownFolderPath,
         };
 
-        extern "C" {
+        unsafe extern "C" {
             fn wcslen(buf: *const u16) -> usize;
         }
 
