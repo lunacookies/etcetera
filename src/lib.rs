@@ -33,7 +33,7 @@
 //! Let’s take an application created by `Acme Corp` with the name `Frobnicator Plus` and the top-level domain of `jrg` as an example.
 //! - XDG strategy would place these in `~/.config/frobnicator-plus`.
 //! - Unix strategy would place these in `~/.frobnicator-plus`.
-//! - Apple strategy would place these in `~/Library/Preferences/org.acmecorp.FrobnicatorPlus`.
+//! - Apple strategy would place these in `~/Library/Preferences/org.acme-corp.Frobnicator-Plus`.
 //! - Windows strategy would place these in `~\AppData\Roaming\Acme Corp\Frobnicator Plus`.
 //!
 //! ```

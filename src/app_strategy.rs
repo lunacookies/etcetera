@@ -29,15 +29,18 @@ impl AppStrategyArgs {
     ///     app_name: "Frobnicator Plus".to_string(),
     /// };
     ///
-    /// assert_eq!(strategy_args.bundle_id().replace(' ', ""), "org.acmecorp.FrobnicatorPlus".to_string());
+    /// assert_eq!(strategy_args.bundle_id(), "org.acme-corp.Frobnicator-Plus".to_string());
     /// ```
     pub fn bundle_id(&self) -> String {
-        format!(
-            "{}.{}.{}",
-            self.top_level_domain,
-            self.author.to_lowercase(),
-            self.app_name
-        )
+        let author = self.author.to_lowercase().replace(' ', "-");
+        let app_name = self.app_name.replace(' ', "-");
+        let mut parts = vec![
+            self.top_level_domain.as_str(),
+            author.as_str(),
+            app_name.as_str(),
+        ];
+        parts.retain(|part| !part.is_empty());
+        parts.join(".")
     }
 
     /// Returns a ‘unixy’ version of the application’s name, akin to what would usually be used as a binary name.
