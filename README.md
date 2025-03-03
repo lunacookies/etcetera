@@ -9,7 +9,7 @@ This is a Rust library that allows you to determine the locations of configurati
 Existing Rust libraries generally do not give you a choice in terms of which standards/conventions they follow.
 Etcetera, on the other hand, gives you the choice.
 
-MSRV: 1.70.0
+MSRV: 1.70.0 (You need to pin `home` dependency to <0.5.11, otherwise it is 1.81.0)
 
 ## Conventions
 
