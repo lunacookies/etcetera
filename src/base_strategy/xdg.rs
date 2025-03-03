@@ -167,7 +167,7 @@ impl Xdg {
     }
 
     fn env_var_or_none(env_var: &str) -> Option<PathBuf> {
-        std::env::var(env_var).ok().and_then(|path| {
+        std::env::var_os(env_var).and_then(|path| {
             let path = PathBuf::from(path);
 
             // Return None if the path obtained from the environment variable isn’t absolute.
