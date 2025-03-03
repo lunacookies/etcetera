@@ -14,7 +14,7 @@ description = "An unopinionated library for obtaining configuration, data, cache
 
 [dependencies]
 cfg-if = "1"
-home = ">=0.5,<0.5.11"
+home = "0.5"
 
 # We should keep this in sync with the `home` crate.
 [target.'cfg(windows)'.dependencies]
