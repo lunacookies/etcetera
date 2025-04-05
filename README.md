@@ -48,4 +48,4 @@ Etcetera also provides convenience functions for selecting the appropriate strat
 
 ## 
 
-See the ![documentation](https://docs.rs/etcetera) for examples.
+See the [documentation](https://docs.rs/etcetera) for examples.
