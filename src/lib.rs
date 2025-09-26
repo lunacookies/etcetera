@@ -30,7 +30,7 @@
 //! ## AppStrategy
 //! If you want to get the path to a configuration, data, cache or another directory, and you want to follow the naming conventions for your application, you can use the `choose_app_strategy` function.
 //!
-//! Let’s take an application created by `Acme Corp` with the name `Frobnicator Plus` and the top-level domain of `jrg` as an example.
+//! Let’s take an application created by `Acme Corp` with the name `Frobnicator Plus` and the top-level domain of `org` as an example.
 //! - XDG strategy would place these in `~/.config/frobnicator-plus`.
 //! - Unix strategy would place these in `~/.frobnicator-plus`.
 //! - Apple strategy would place these in `~/Library/Preferences/org.acme-corp.Frobnicator-Plus`.
