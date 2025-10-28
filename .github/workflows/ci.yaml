@@ -52,7 +52,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        toolchain: [beta, stable, 1.81.0]
+        toolchain: [beta, stable, 1.87.0]
 
     name: Test on ${{ matrix.os }} with Rust ${{ matrix.toolchain }}
     runs-on: ${{ matrix.os }}

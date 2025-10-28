@@ -9,7 +9,10 @@ This is a Rust library that allows you to determine the locations of configurati
 Existing Rust libraries generally do not give you a choice in terms of which standards/conventions they follow.
 Etcetera, on the other hand, gives you the choice.
 
-MSRV: 1.70.0 (You need to pin `home` dependency to <0.5.11, otherwise it is 1.81.0)
+MSRV: 1.87.0
+
+Note: The MSRV was raised to 1.87.0 in v0.11 to remove the dependency on the `home` crate & instead use the undeprecated `std::env::home_dir`.
+If you want, you can use v0.9 with an MSRV of 1.70.0 or v0.10 with an MSRV of 1.81.0 instead.
 
 ## Conventions
 
@@ -35,7 +38,7 @@ Etcetera has 2 modes of operation: `BaseStrategy` & `AppStrategy`:
   - Apple: `~/Library/Preferences/org.acme-corp.Frobnicator-Plus`
   - Windows: `~\AppData\Roaming\Acme Corp\Frobnicator Plus`
 
-Note: the location of the home (~) is determined by the [`home`](https://docs.rs/home/0.5.4/home/fn.home_dir.html) crate.
+Note: the location of the home (~) is determined by [`std::env::home_dir`](https://doc.rust-lang.org/std/env/fn.home_dir.html).
 
 ### Convenience functions
 

@@ -1,5 +1,5 @@
 use crate::base_strategy::BaseStrategy;
-use crate::{base_strategy, HomeDirError};
+use crate::{HomeDirError, base_strategy};
 use std::path::{Path, PathBuf};
 
 /// This strategy follows Windows’ conventions. It seems that all Windows GUI apps, and some command-line ones follow this pattern. The specification is available [here](https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid).
@@ -15,9 +15,11 @@ use std::path::{Path, PathBuf};
 /// use std::path::Path;
 ///
 /// // Remove the environment variables that the strategy reads from.
+/// unsafe {
 /// std::env::remove_var("USERPROFILE");
 /// std::env::remove_var("APPDATA");
 /// std::env::remove_var("LOCALAPPDATA");
+/// }
 ///
 /// let app_strategy = Windows::new(AppStrategyArgs {
 ///     top_level_domain: "org".to_string(),
@@ -77,9 +79,11 @@ use std::path::{Path, PathBuf};
 ///     "/my_cache_location/"
 /// };
 ///
+/// unsafe {
 /// std::env::set_var("USERPROFILE", &home_path);
 /// std::env::set_var("APPDATA", data_path);
 /// std::env::set_var("LOCALAPPDATA", cache_path);
+/// }
 ///
 /// let app_strategy = Windows::new(AppStrategyArgs {
 ///     top_level_domain: "org".to_string(),
