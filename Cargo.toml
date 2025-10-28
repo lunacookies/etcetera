@@ -1,6 +1,6 @@
 [package]
 name = "etcetera"
-version = "0.10.0"
+version = "0.11.0"
 categories = ["config"]
 documentation = "https://docs.rs/etcetera"
 edition = "2024"
