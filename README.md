@@ -18,7 +18,7 @@ If you want, you can use v0.9 with an MSRV of 1.70.0 or v0.10 with an MSRV of 1.
 
 Etcetera supports the following conventions:
 
-- the [XDG base directory](https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+- the [XDG base directory](https://standards.freedesktop.org/basedir/latest/)
 - Apple's [Standard Directories](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html)
 - Window's [Known Folder Locations](https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid)
 - the "Unix Single-folder Convention" i.e. everything in `~/.myapp`

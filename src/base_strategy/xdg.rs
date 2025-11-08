@@ -3,7 +3,7 @@ use std::path::PathBuf;
 
 use crate::HomeDirError;
 
-/// This strategy implements the [XDG Base Directories Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html). It is the most common on Linux, but is increasingly being adopted elsewhere.
+/// This strategy implements the [XDG Base Directories Specification](https://specifications.freedesktop.org/basedir/latest/). It is the most common on Linux, but is increasingly being adopted elsewhere.
 ///
 /// This initial example removes all the XDG environment variables to show the strategy’s use of the XDG default directories.
 ///
