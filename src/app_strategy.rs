@@ -101,7 +101,7 @@ pub trait AppStrategy {
     /// directory related to ownership, permissions, and persistence. This library does not check
     /// these requirements.
     ///
-    /// [spec]: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+    /// [spec]: https://specifications.freedesktop.org/basedir/latest/
     fn runtime_dir(&self) -> Option<PathBuf>;
 
     /// Constructs a path inside your application’s configuration directory to which a path of your choice has been appended.
