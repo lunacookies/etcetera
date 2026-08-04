@@ -50,12 +50,14 @@ macro_rules! create_strategies {
     };
 }
 
-cfg_if::cfg_if! {
-    if #[cfg(target_os = "windows")] {
+cfg_select! {
+    target_os = "windows" => {
         create_strategies!(Windows, Windows);
-    } else if #[cfg(any(target_os = "macos", target_os = "ios"))] {
+    }
+    any(target_os = "macos", target_os = "ios") => {
         create_strategies!(Apple, Xdg);
-    } else {
+    }
+    _ => {
         create_strategies!(Xdg, Xdg);
     }
 }

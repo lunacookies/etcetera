@@ -1,6 +1,6 @@
 [package]
 name = "etcetera"
-version = "0.11.0"
+version = "0.12.0"
 categories = ["config"]
 documentation = "https://docs.rs/etcetera"
 edition = "2024"
@@ -9,11 +9,8 @@ keywords = ["xdg", "dirs", "directories", "basedir", "path"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/lunacookies/etcetera"
-rust-version = "1.87.0"
+rust-version = "1.95.0"
 description = "An unopinionated library for obtaining configuration, data, cache, & other directories"
-
-[dependencies]
-cfg-if = "1"
 
 # We should keep this in sync with the `home` crate.
 [target.'cfg(windows)'.dependencies]

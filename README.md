@@ -9,10 +9,13 @@ This is a Rust library that allows you to determine the locations of configurati
 Existing Rust libraries generally do not give you a choice in terms of which standards/conventions they follow.
 Etcetera, on the other hand, gives you the choice.
 
-MSRV: 1.87.0
+MSRV: 1.95.0
 
-Note: The MSRV was raised to 1.87.0 in v0.11 to remove the dependency on the `home` crate & instead use the undeprecated `std::env::home_dir`.
-If you want, you can use v0.9 with an MSRV of 1.70.0 or v0.10 with an MSRV of 1.81.0 instead.
+Note: The MSRV was raised to 1.95.0 in v0.12 to remove the dependency on the `cfg-if` crate & instead use the `cfg_select!` macro introduced in that version.
+If you want, you can use one of the following releases with a lower MSRV:
+- v0.9 with an MSRV of 1.70.0
+- v0.10 with an MSRV of 1.81.0
+- v0.11 with an MSRC of 1.87.0
 
 ## Conventions
 
