@@ -104,9 +104,11 @@
 
 pub mod app_strategy;
 pub mod base_strategy;
+mod user_dirs;
 
 pub use app_strategy::{AppStrategy, AppStrategyArgs, choose_app_strategy};
 pub use base_strategy::{BaseStrategy, choose_base_strategy};
+pub use user_dirs::download_dir;
 
 /// A convenience function that wraps the [`home_dir`](https://doc.rust-lang.org/std/env/fn.home_dir.html) function from the standard library.
 pub fn home_dir() -> Result<std::path::PathBuf, HomeDirError> {
