@@ -1,4 +1,6 @@
-use std::path::{Path, PathBuf};
+#[cfg(all(unix, not(target_os = "macos")))]
+use std::path::Path;
+use std::path::PathBuf;
 
 /// Returns the user's downloads directory, or `None` if it cannot be found.
 ///
@@ -16,7 +18,7 @@ pub fn download_dir() -> Option<PathBuf> {
 }
 
 /// Parses `XDG_DOWNLOAD_DIR` out of the contents of a `user-dirs.dirs` file.
-#[cfg_attr(not(all(unix, not(target_os = "macos"))), allow(dead_code))]
+#[cfg(all(unix, not(target_os = "macos")))]
 fn parse_user_dirs(contents: &str, home: &Path) -> Option<PathBuf> {
     contents.lines().find_map(|line| {
         let value = line.trim().strip_prefix("XDG_DOWNLOAD_DIR=")?;
@@ -25,7 +27,7 @@ fn parse_user_dirs(contents: &str, home: &Path) -> Option<PathBuf> {
 }
 
 /// Values are either `$HOME/...` or an absolute path.
-#[cfg_attr(not(all(unix, not(target_os = "macos"))), allow(dead_code))]
+#[cfg(all(unix, not(target_os = "macos")))]
 fn resolve(value: &str, home: &Path) -> Option<PathBuf> {
     if value == "$HOME" {
         return Some(home.to_path_buf());
@@ -122,7 +124,7 @@ mod imp {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, unix, not(target_os = "macos")))]
 mod tests {
     use super::*;
 
