@@ -97,7 +97,7 @@ pub trait AppStrategy {
     /// Currently, only the [`Xdg`](struct.Xdg.html) & [`Unix`](struct.Unix.html) strategies support
     /// this.
     ///
-    /// Note: The [XDG Base Directory Specification](spec) places additional requirements on this
+    /// Note: The [XDG Base Directory Specification][spec] places additional requirements on this
     /// directory related to ownership, permissions, and persistence. This library does not check
     /// these requirements.
     ///
